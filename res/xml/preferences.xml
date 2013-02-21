@@ -1,0 +1,47 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:threefiftyprefs="http://schemas.android.com/apk/res/fr.odai.smsdiffusion"
+    android:title="@string/action_settings" >
+
+    <PreferenceCategory android:title="@string/title_set_application" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="active"
+            android:summary="@string/sum_activate"
+            android:title="@string/title_activate" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_set_config" >
+        <EditTextPreference
+            android:defaultValue="#SMSDIFF"
+            android:dialogTitle="@string/title_key"
+            android:key="keyword"
+            android:summary="@string/sum_key"
+            android:title="@string/title_key" />
+        
+        <EditTextPreference
+            android:defaultValue="@string/def_add"
+            android:dialogTitle="@string/title_add"
+            android:key="added_number"
+            android:summary="@string/sum_add"
+            android:title="@string/title_add"
+            android:dialogMessage="@string/sum_add_diag" />
+        
+        <fr.odai.smsdiffusion.ListPreferenceMultiSelect
+            android:defaultValue="#ALL#"
+            android:key="to_delete_numbers"
+            android:dialogTitle="@string/title_del"
+            android:summary="@string/sum_del"
+            android:title="@string/title_del"
+            threefiftyprefs:checkAll="check"
+            threefiftyprefs:separator="|" />
+
+        <fr.odai.smsdiffusion.ListPreferenceMultiSelect
+            android:defaultValue="#ALL#"
+            android:key="selected_numbers"
+            android:dialogTitle="@string/title_list"
+            android:summary="@string/sum_list"
+            android:title="@string/title_list"
+            threefiftyprefs:checkAll="check"
+            threefiftyprefs:separator="|" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

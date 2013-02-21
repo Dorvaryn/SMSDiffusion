@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SMS Diffusion</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_set_application">Application</string>
+    <string name="title_set_config">Configuration</string>
+    <string name="sum_activate">Will start to send matching incoming SMS to the diffusion List</string>
+    <string name="title_activate">Activate SMS Diffusion</string>
+	<string name="sum_key">This is the keyword which will trigger the diffusion of the message to your diffusion list</string>
+    <string name="title_key">Keyword</string>
+    <string name="sum_add">Enter a name and a number to add to your diffusion list</string>
+    <string name="sum_add_diag">Long press to select from the contacts or enter a name followed by ":" and the number to add to your diffusion list</string>
+    <string name="title_add">Add a number</string>
+    <string name="def_add">Name:00555658475</string>
+    <string name="sum_list">Chose the numbers you want to activate in your diffusion list</string>
+    <string name="title_list">Create list</string>
+    <string name="sum_del">Enter a name or a number to remove from your diffusion list</string>
+    <string name="title_del">Remove a number</string>
+    
+</resources>

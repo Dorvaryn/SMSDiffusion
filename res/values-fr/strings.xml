@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_settings">Parramètres</string>
+    <string name="title_set_application">Application</string>
+    <string name="title_set_config">Configuration</string>
+    <string name="sum_activate">Active le transfert des SMS contenants le mot-clé à la liste de diffusion</string>
+    <string name="title_activate">Activer SMS Diffusion</string>
+	<string name="sum_key">Le mot-clé déclenchant le trasfert d\'un SMS à la liste de diffusion</string>
+    <string name="title_key">Mot-Clé</string>
+    <string name="sum_add_diag">Faites un clic long pour choisir depuis vos contacts ou entrez un nom et le numéro de téléphone à ajouter à la liste de diffusion séparés par ":"</string>
+    <string name="sum_add">Entrez un nom un numéro de téléphone à ajouter à la liste de diffusion</string>
+    <string name="title_add">Ajouter un numéro</string>
+    <string name="def_add">Nom:0700008475</string>
+    <string name="sum_list">Sélectionez les numéros qui feront partie de la liste de diffusion</string>
+    <string name="title_list">Créer la liste</string>
+    <string name="sum_del">Entrez un nom ou un numéro à retirer de la liste de diffusion</string>
+    <string name="title_del">Supprimer un numéro</string>
+    
+</resources>
