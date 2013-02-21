@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="action_settings">Parramètres</string>
+    <string name="action_settings">Paramètres</string>
     <string name="title_set_application">Application</string>
     <string name="title_set_config">Configuration</string>
     <string name="sum_activate">Active le transfert des SMS contenants le mot-clé à la liste de diffusion</string>
@@ -14,7 +14,7 @@
     <string name="def_add">Nom:0700008475</string>
     <string name="sum_list">Sélectionez les numéros qui feront partie de la liste de diffusion</string>
     <string name="title_list">Créer la liste</string>
-    <string name="sum_del">Entrez un nom ou un numéro à retirer de la liste de diffusion</string>
-    <string name="title_del">Supprimer un numéro</string>
+    <string name="sum_del">Sélectionnez les numéros à retirer de la liste de diffusion</string>
+    <string name="title_del">Supprimer des numéros de la liste de diffusion</string>
     
 </resources>

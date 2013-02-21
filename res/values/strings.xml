@@ -15,7 +15,7 @@
     <string name="def_add">Name:00555658475</string>
     <string name="sum_list">Chose the numbers you want to activate in your diffusion list</string>
     <string name="title_list">Create list</string>
-    <string name="sum_del">Enter a name or a number to remove from your diffusion list</string>
-    <string name="title_del">Remove a number</string>
+    <string name="sum_del">Select the numbers you want to remove from your diffusion list</string>
+    <string name="title_del">Remove numbers from the list</string>
     
 </resources>
