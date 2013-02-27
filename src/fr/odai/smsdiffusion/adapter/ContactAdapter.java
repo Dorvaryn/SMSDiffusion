@@ -37,6 +37,9 @@ public class ContactAdapter extends ArrayAdapter<POJOContact> {
 
 		TextView phone = (TextView) convertView.findViewById(R.id.item_contact_phone);
 		phone.setText(contact.phone);
+		
+		TextView phoneType = (TextView) convertView.findViewById(R.id.item_contact_phone_type);
+		phoneType.setText(contact.phoneType);
 
 		QuickContactBadge badge = (QuickContactBadge) convertView.findViewById(R.id.item_contact_badge);
 		if (contact.icon != null)
