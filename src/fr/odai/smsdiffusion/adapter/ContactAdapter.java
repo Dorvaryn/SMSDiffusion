@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class ContactAdapter extends ArrayAdapter<POJOContact> {
 
-	protected ArrayList<POJOContact> contacts;
+	public ArrayList<POJOContact> contacts;
 
 	public ContactAdapter(Context context, int textViewResourceId, ArrayList<POJOContact> contacts) {
 		super(context, textViewResourceId, contacts);
