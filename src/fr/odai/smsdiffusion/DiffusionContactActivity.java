@@ -1,13 +1,12 @@
 package fr.odai.smsdiffusion;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import fr.odai.smsdiffusion.adapter.ContactAdapter;
+import fr.odai.smsdiffusion.adapter.POJOContact;
 
 public class DiffusionContactActivity extends ListActivity {
 
@@ -18,19 +17,9 @@ public class DiffusionContactActivity extends ListActivity {
 
 		AutoCompleteTextView phoneNumber = (AutoCompleteTextView) findViewById(R.id.text_contact);
 
-		ArrayAdapter<String> acontactslist = new ArrayAdapter<String>(this, R.layout.list_item_contacts);
-		Cursor contactCursor = getContentResolver().query(
-				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-		contactCursor.moveToFirst();
-		do {
-			String name = contactCursor.getString(contactCursor
-					.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
-			String num = contactCursor.getString(contactCursor
-					.getColumnIndex(CommonDataKinds.Phone.NUMBER));
-			acontactslist.add(num);
-			Log.e("wtf", num);
-		} while (contactCursor.moveToNext());
+		ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(this);
+		ContactAdapter adapter = new ContactAdapter(this, R.layout.item_contact, allContacts);
 
-		phoneNumber.setAdapter(acontactslist);
+		phoneNumber.setAdapter(adapter);
 	}
 }
