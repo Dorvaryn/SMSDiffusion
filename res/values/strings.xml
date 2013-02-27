@@ -16,6 +16,7 @@
     <string name="diffusion_contact_title">Contacts</string>
     <string name="diffusion_contact_ui_empty">Add a contact to monitor</string>
     <string name="diffusion_contact_ui_hint">Enter contact info</string>
+    <string name="diffusion_contact_ui_contentdescription">Save contact</string>
 
     <!-- Old strings -->
     <string name="action_settings">Settings</string>

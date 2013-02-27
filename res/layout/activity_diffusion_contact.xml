@@ -9,23 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/text_contact"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:hint="@string/diffusion_contact_ui_hint"
             android:ems="10"
+            android:hint="@string/diffusion_contact_ui_hint"
             android:singleLine="true" >
-
-            <requestFocus />
-        </EditText>
+        </AutoCompleteTextView>
 
         <ImageButton
             android:id="@+id/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/diffusion_contact_ui_contentdescription"
             android:src="@drawable/ic_add" />
+
     </LinearLayout>
 
     <ListView
