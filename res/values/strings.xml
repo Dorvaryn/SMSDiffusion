@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">SMS Diffusion</string>
+    
+    <string name="home_add">Create new diffusion list</string>
     <string name="action_settings">Settings</string>
     <string name="title_set_application">Application</string>
     <string name="title_set_config">Configuration</string>
