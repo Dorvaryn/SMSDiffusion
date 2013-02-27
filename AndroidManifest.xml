@@ -20,11 +20,26 @@
         <activity
             android:name="fr.odai.smsdiffusion.HomeActivity"
             android:label="@string/app_name" >
+
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name="fr.odai.smsdiffusion.DiffusionTabActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="fr.odai.smsdiffusion.DiffusionKeywordActivity"
+            android:label="@string/diffusion_keyword_title" >
+        </activity>
+        <activity
+            android:name="fr.odai.smsdiffusion.DiffusionContactActivity"
+            android:label="@string/diffusion_contact_title" >
         </activity>
         <activity
             android:name="fr.odai.smsdiffusion.Settings"
