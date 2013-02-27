@@ -37,7 +37,7 @@ public class DiffusionContactFragment extends ListFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> contactAdapter, View arg1, int position, long arg3) {
-				adapter.add(autoAdapter.contacts.get(position));
+				adapter.add(autoAdapter.getItem(position));
 				phoneNumber.setText("");
 			}
 		});
