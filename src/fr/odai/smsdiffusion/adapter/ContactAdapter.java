@@ -37,5 +37,4 @@ public class ContactAdapter extends ArrayAdapter<POJOContact> {
 
 		return convertView;
 	}
-
 }

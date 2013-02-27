@@ -11,6 +11,20 @@ public class POJOContact {
 	public String name;
 	public String phone;
 	
+	public POJOContact(Context ctx, String phone) {
+		super();
+		this.phone = phone;
+		Cursor contactCursor = ctx.getContentResolver().query(
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
+		contactCursor.moveToFirst();
+		this.name = contactCursor.getString(contactCursor
+				.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
+	}
+	
+	public POJOContact() {
+		super();
+	}
+
 	public String toString()
 	{
 		return name;
