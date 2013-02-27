@@ -2,14 +2,19 @@ package fr.odai.smsdiffusion.adapter;
 
 import java.util.ArrayList;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 
 public class POJOContact {
+	public String lookupKey = "";
+	
 	public String name;
 	public String phone;
+	public Uri icon;
 	
 	public String toString()
 	{
@@ -29,6 +34,15 @@ public class POJOContact {
 		contactCursor.moveToFirst();
 		do {
 			POJOContact contact = new POJOContact();
+
+			contact.lookupKey = contactCursor.getString(contactCursor
+					.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+			String photoId = contactCursor.getString(contactCursor
+					.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+			if (photoId != null) {
+				contact.icon = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI,
+						Long.parseLong(photoId));
+			}
 			contact.name = contactCursor.getString(contactCursor
 					.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
 			contact.phone = contactCursor.getString(contactCursor
