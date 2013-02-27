@@ -15,10 +15,26 @@ public class POJOContact {
 	public String name;
 	public String phoneType;
 	public String phone;
-	public Uri icon;
 
+	public Uri icon;
+	
+	public POJOContact(Context ctx, String phone) {
+		super();
+		this.phone = phone;
+		Cursor contactCursor = ctx.getContentResolver().query(
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?", new String[]{phone}, null);
+		contactCursor.moveToFirst();
+		this.name = contactCursor.getString(contactCursor
+				.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
+	}
+	
 	public String toString() {
 		return name + "<" + phone.replace(" ", "") + ">";
+	}
+
+	
+	public POJOContact() {
+		super();
 	}
 
 	/**
