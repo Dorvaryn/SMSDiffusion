@@ -1,11 +1,11 @@
 package fr.odai.smsdiffusion;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends ListActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

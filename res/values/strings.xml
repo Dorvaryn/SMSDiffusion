@@ -3,7 +3,9 @@
 
     <string name="app_name">SMS Diffusion</string>
     
-    <string name="home_add">Create new diffusion list</string>
+    <string name="home_ui_empty">Welcome to SMSDiffusion!\nYou don\'t have any diffusions list now, click the "+" in the menu to get started.</string>
+    <string name="home_menu_add">Create new diffusion list</string>
+    
     <string name="action_settings">Settings</string>
     <string name="title_set_application">Application</string>
     <string name="title_set_config">Configuration</string>
