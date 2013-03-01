@@ -1,16 +1,16 @@
 package fr.odai.smsdiffusion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import fr.odai.smsdiffusion.adapter.POJOList;
+import fr.odai.smsdiffusion.db.DBHelper;
 
 public class SMSProcess extends BroadcastReceiver {
 
@@ -30,42 +30,28 @@ public class SMSProcess extends BroadcastReceiver {
 				for (int i = 0; i < smsExtra.length; ++i) {
 					SmsMessage sms = SmsMessage
 							.createFromPdu((byte[]) smsExtra[i]);
-					SharedPreferences prefs = PreferenceManager
-							.getDefaultSharedPreferences(context);
-					String body = sms.getMessageBody().toString();
-					String keyword = prefs.getString("keyword", "");
-					if (!keyword.equalsIgnoreCase("") && body.contains(keyword)) {
-						String[] splited = body.split(keyword);
-						String new_body = new String();
-						for (int j = 0; j < splited.length; j++) {
-							new_body = new_body.concat(splited[j]);
-						}
 
-						String[] tabnumbers = ListPreferenceMultiSelect
-								.parseStoredValue(prefs.getString(
-										"selected_numbers", ""));
-						ArrayList<String> numbers;
-						if (tabnumbers != null) {
-							numbers = new ArrayList<String>(
-									Arrays.asList(tabnumbers));
-						} else {
-							numbers = new ArrayList<String>();
-						}
-						if (!numbers.isEmpty() && numbers.get(0).equalsIgnoreCase("#ALL#")) {
-							tabnumbers = ListPreferenceMultiSelect
-									.parseStoredValue(prefs.getString(
-											"numbers", ""));
-							if (tabnumbers != null) {
-								numbers = new ArrayList<String>(
-										Arrays.asList(tabnumbers));
-							} else {
-								numbers = new ArrayList<String>();
+					String body = sms.getMessageBody().toString();
+					String address = sms.getOriginatingAddress();
+					
+					ArrayList<POJOList> lists = DBHelper.getEnabledDiffusionLists(context);
+					for(POJOList list : lists){
+						ArrayList<String> keywords = DBHelper.getKeywords(context, list.getId());
+						for(String keyword : keywords){
+							if(body.contains(keyword)){
+								ArrayList<String> contactsPhone = DBHelper.getContactsPhoneOnly(context, list.getId());
+								for(String number : contactsPhone){
+									if(!PhoneNumberUtils.compare(address,number)){
+										String[] splited = body.split(keyword);
+										String new_body = new String();
+										for (int j = 0; j < splited.length; j++) {
+											new_body = new_body.concat(splited[j]);
+										}
+										SmsManager smsManager = SmsManager.getDefault();
+										smsManager.sendTextMessage(number, null, new_body, null, null);
+									}
+								}
 							}
-						}
-						
-						for (String number : numbers) {
-							SmsManager smsManager = SmsManager.getDefault();
-							smsManager.sendTextMessage(number, null, new_body, null, null);
 						}
 					}
 				}

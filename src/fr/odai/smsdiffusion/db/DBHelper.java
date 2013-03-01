@@ -79,6 +79,28 @@ public class DBHelper {
 		}
 		return contacts;
 	}
+	
+	public static ArrayList<String> getContactsPhoneOnly(Context context,
+			int list_id) {
+
+		ArrayList<String> contacts = new ArrayList<String>();
+		synchronized (DBHelper.sDataLock) {
+			SQLiteDatabase db = getDatabase(context);
+
+			Cursor cursor = db.query(true, "contacts",
+					new String[] { "number" }, "list_id = ?", new String[]{String.valueOf(list_id)}, null, null,
+					"_id DESC", null);
+
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				contacts.add(cursor.getString(0));
+				cursor.moveToNext();
+			}
+			cursor.close();
+			db.close();
+		}
+		return contacts;
+	}
 
 	public static ArrayList<POJOList> getDiffusionLists(Context context) {
 
@@ -88,6 +110,30 @@ public class DBHelper {
 
 			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
 					"_id", "name", "enable" }, null, null, null, null,
+					"_id DESC", null);
+
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				boolean enable = cursor.getInt(2) == 1;
+				POJOList entry = new POJOList(cursor.getInt(0),
+						cursor.getString(1), enable);
+				lists.add(entry);
+				cursor.moveToNext();
+			}
+			cursor.close();
+			db.close();
+		}
+		return lists;
+	}
+	
+	public static ArrayList<POJOList> getEnabledDiffusionLists(Context context) {
+
+		ArrayList<POJOList> lists = new ArrayList<POJOList>();
+		synchronized (DBHelper.sDataLock) {
+			SQLiteDatabase db = getDatabase(context);
+
+			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
+					"_id", "name", "enable" }, "enabled = ?", new String[]{String.valueOf(1)}, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
@@ -175,8 +221,9 @@ public class DBHelper {
 	public static void removeList(Context context, int list_id) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
-
 			db.delete("diffusion_lists", "_id = ?", new String[] { String.valueOf(list_id) });
+			db.delete("keywords", "list_id = ?", new String[] { String.valueOf(list_id) });
+			db.delete("contacts", "list_id = ?", new String[] { String.valueOf(list_id) });
 			db.close();
 		}
 	}

@@ -6,15 +6,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import fr.odai.smsdiffusion.adapter.ContactAdapter;
 import fr.odai.smsdiffusion.adapter.POJOContact;
 import fr.odai.smsdiffusion.adapter.SwipeDismissListViewTouchListener;
@@ -63,6 +68,31 @@ public class DiffusionContactFragment extends ListFragment {
 					phoneNumber.setText("");
 				}
 			});	
+			
+			final ImageButton add = (ImageButton) root.findViewById(R.id.button_add);
+			add.setOnClickListener(new OnClickListener() {
+				
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onClick(View v) {
+					POJOContact newContact = autoAdapter.getItem(0);
+					DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+					((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+					phoneNumber.setText("");
+				}
+			});
+			
+			phoneNumber.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
+				@Override
+				public boolean onEditorAction(TextView v, int actionId,
+						KeyEvent event) {
+					if (actionId == EditorInfo.IME_ACTION_DONE) {
+						add.performClick();
+						return true;
+					}
+					return false;
+				};
+			});
 			
 			return root;
 		}
