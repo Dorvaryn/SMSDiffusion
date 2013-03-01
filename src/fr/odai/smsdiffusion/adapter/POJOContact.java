@@ -62,7 +62,7 @@ public class POJOContact {
 		Cursor contactCursor = ctx.getContentResolver().query(
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 		contactCursor.moveToFirst();
-		do {
+		while (!contactCursor.isAfterLast()){
 			POJOContact contact = new POJOContact();
 
 			contact.lookupKey = contactCursor.getString(contactCursor
@@ -83,7 +83,8 @@ public class POJOContact {
 			contact.phone = contactCursor.getString(contactCursor
 					.getColumnIndex(CommonDataKinds.Phone.NUMBER));
 			allContacts.add(contact);
-		} while (contactCursor.moveToNext());
+			contactCursor.moveToNext();
+		}
 
 		contactCursor.close();
 
