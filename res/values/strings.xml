@@ -7,6 +7,8 @@
     <string name="home_ui_empty">Welcome to SMSDiffusion!\nYou don\'t have any diffusions list now, click the "+" in the menu to get started.</string>
     <string name="home_menu_add">Create new diffusion list</string>
     <string name="home_menu_add_dialog">Enter the name of your new diffusion list</string>
+    <string name="home_menu_remove">Delete this list</string>
+    <string name="home_menu_remove_dialog">Do you want to delete this list?</string>
     <string name="dialog_button_positive">OK</string>
     <string name="dialog_button_negative">Cancel</string>
 

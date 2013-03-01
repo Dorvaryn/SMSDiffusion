@@ -9,43 +9,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import fr.odai.smsdiffusion.adapter.ListAdapter;
 import fr.odai.smsdiffusion.adapter.POJOList;
-import fr.odai.smsdiffusion.adapter.SwipeDismissListViewTouchListener;
 import fr.odai.smsdiffusion.db.DBHelper;
 
 public class HomeActivity extends ListActivity {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		setListAdapter(new ListAdapter(this, R.layout.item_list,
 				DBHelper.getDiffusionLists(this)));
-		ListView listView = getListView();
-		SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                		listView,
-                        new SwipeDismissListViewTouchListener.OnDismissCallback() {
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
-                                	POJOList toDelete = (POJOList) getListAdapter().getItem(position);
-                                	((ArrayAdapter<POJOList>) getListAdapter()).remove(toDelete);
-                                	DBHelper.removeList(getBaseContext(), toDelete.getId());                                	
-                                }
-                                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                            }
-                        });
-        listView.setOnTouchListener(touchListener);
-        // Setting this scroll listener is required to ensure that during ListView scrolling,
-        // we don't look for swipes.
-        listView.setOnScrollListener(touchListener.makeScrollListener());
 	}
 
 	@Override
