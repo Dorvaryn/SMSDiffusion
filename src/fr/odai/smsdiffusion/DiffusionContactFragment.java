@@ -71,10 +71,12 @@ public class DiffusionContactFragment extends ListFragment {
 				@SuppressWarnings("unchecked")
 				@Override
 				public void onClick(View v) {
-					POJOContact newContact = autoAdapter.getItem(0);
-					DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
-					((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
-					phoneNumber.setText("");
+					if(!phoneNumber.getText().toString().equalsIgnoreCase("")){
+						POJOContact newContact = autoAdapter.getItem(0);
+						DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+						((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+						phoneNumber.setText("");
+					}
 				}
 			});
 			

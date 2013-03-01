@@ -161,7 +161,8 @@ public class DBHelper {
 			cursor.moveToFirst();
 			boolean enable = cursor.getInt(2) == 1;
 			entry = new POJOList(cursor.getInt(0),
-					cursor.getString(1), enable);			
+					cursor.getString(1), enable);
+			cursor.close();
 			db.close();
 		}
 		return entry;

@@ -39,6 +39,7 @@ public class POJOContact {
 				contactCursor.getInt(contactCursor.getColumnIndex(CommonDataKinds.Phone.TYPE)),
 				contactCursor.getString(contactCursor
 						.getColumnIndex(CommonDataKinds.Phone.LABEL))).toString();
+		contactCursor.close();
 	}
 	
 	public String toString() {
