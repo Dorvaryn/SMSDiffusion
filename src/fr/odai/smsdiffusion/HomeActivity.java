@@ -77,6 +77,7 @@ public class HomeActivity extends ListActivity {
 
 			// Set an EditText view to get user input
 			final EditText input = new EditText(this);
+			input.setSingleLine();
 			alert.setView(input);
 
 			alert.setPositiveButton(

@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Name of the list"
+        android:text="@string/diffusion_list_textName"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ruler"
-        android:text="Enabled"
+        android:text="@string/diffusion_list_textEnable"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <include
