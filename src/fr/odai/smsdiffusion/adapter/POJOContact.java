@@ -26,6 +26,20 @@ public class POJOContact {
 		contactCursor.moveToFirst();
 		this.name = contactCursor.getString(contactCursor
 				.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
+		this.lookupKey = contactCursor.getString(contactCursor
+				.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+		String photoId = contactCursor.getString(contactCursor
+				.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+		if (photoId != null) {
+			this.icon = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI,
+					Long.parseLong(photoId));
+		}
+		this.phoneType = CommonDataKinds.Phone.getTypeLabel(
+				ctx.getResources(),
+				contactCursor.getInt(contactCursor.getColumnIndex(CommonDataKinds.Phone.TYPE)),
+				contactCursor.getString(contactCursor
+						.getColumnIndex(CommonDataKinds.Phone.LABEL))).toString();
+		contactCursor.close();
 	}
 	
 	public String toString() {
@@ -49,7 +63,7 @@ public class POJOContact {
 		Cursor contactCursor = ctx.getContentResolver().query(
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 		contactCursor.moveToFirst();
-		do {
+		while (!contactCursor.isAfterLast()){
 			POJOContact contact = new POJOContact();
 
 			contact.lookupKey = contactCursor.getString(contactCursor
@@ -70,7 +84,8 @@ public class POJOContact {
 			contact.phone = contactCursor.getString(contactCursor
 					.getColumnIndex(CommonDataKinds.Phone.NUMBER));
 			allContacts.add(contact);
-		} while (contactCursor.moveToNext());
+			contactCursor.moveToNext();
+		}
 
 		contactCursor.close();
 

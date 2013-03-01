@@ -2,31 +2,21 @@ package fr.odai.smsdiffusion;
 
 import java.util.HashMap;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
-import android.widget.TextView;
 
 public class DiffusionTabActivity extends FragmentActivity implements
-		TabHost.OnTabChangeListener{
+		TabHost.OnTabChangeListener, FragementCallbacks{
 
 	private TabHost mTabHost;
+	private int list_id;
 
 	@SuppressWarnings("rawtypes")
 	private HashMap mapTabInfo = new HashMap();
@@ -67,10 +57,9 @@ public class DiffusionTabActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_diffusion_tab);
-
+		list_id = getIntent().getExtras().getInt("list_id");
 		// On initialise les Tabs
 		initialiseTabHost(savedInstanceState);
-
 		if (savedInstanceState != null) {
 			// On restaure le tab s�lectionn� si il y a un �tat conserv�
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
@@ -92,12 +81,13 @@ public class DiffusionTabActivity extends FragmentActivity implements
 		mTabHost.setup();
 		TabInfo tabInfo = null;
 		Resources res = getResources();
+		
 		DiffusionTabActivity.addTab(
 				this,
 				this.mTabHost,
-				this.mTabHost.newTabSpec("Contacts").setIndicator(
-						res.getString(R.string.diffusion_contact_title)),
-				(tabInfo = new TabInfo("Contacts", DiffusionContactFragment.class, args)));
+				this.mTabHost.newTabSpec("List").setIndicator(
+						res.getString(R.string.diffusion_list_title)),
+				(tabInfo = new TabInfo("List", DiffusionListFragment.class, args)));
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
 		
 		DiffusionTabActivity.addTab(
@@ -108,8 +98,16 @@ public class DiffusionTabActivity extends FragmentActivity implements
 				(tabInfo = new TabInfo("Keywords", DiffusionKeywordFragment.class, args)));
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
 
+		DiffusionTabActivity.addTab(
+				this,
+				this.mTabHost,
+				this.mTabHost.newTabSpec("Contacts").setIndicator(
+						res.getString(R.string.diffusion_contact_title)),
+				(tabInfo = new TabInfo("Contacts", DiffusionContactFragment.class, args)));
+		this.mapTabInfo.put(tabInfo.tag, tabInfo);
+		
 		// Tab par défaut
-		this.onTabChanged("Contacts");
+		this.onTabChanged("List");
 		mTabHost.setOnTabChangedListener(this);
 	}
 
@@ -175,6 +173,17 @@ public class DiffusionTabActivity extends FragmentActivity implements
 			ft.commit();
 			this.getSupportFragmentManager().executePendingTransactions();
 		}
+	}
+
+	@Override
+	public int getListId() {
+		return list_id;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		list_id = getIntent().getExtras().getInt("list_id");
 	}
 
 }

@@ -2,30 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="top|center_horizontal"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <AutoCompleteTextView
-            android:id="@+id/text_contact"
+        <EditText
+            android:id="@+id/text_keyword"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:hint="@string/diffusion_keyword_ui_hint"
             android:ems="10"
-            android:hint="@string/diffusion_contact_ui_hint"
-            android:singleLine="true" >
-        </AutoCompleteTextView>
+            android:singleLine="true"
+            android:imeOptions="actionDone" >
+            <requestFocus />
+        </EditText>
 
         <ImageButton
             android:id="@+id/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/diffusion_contact_ui_contentdescription"
             android:src="@drawable/ic_add" />
-
     </LinearLayout>
 
     <ListView
@@ -39,6 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/diffusion_contact_ui_empty" />
+        android:text="@string/diffusion_keyword_ui_empty" />
 
 </LinearLayout>

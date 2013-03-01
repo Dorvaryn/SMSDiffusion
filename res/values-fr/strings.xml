@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="action_settings">Paramètres</string>
-    <string name="title_set_application">Application</string>
-    <string name="title_set_config">Configuration</string>
-    <string name="sum_activate">Active le transfert des SMS contenants le mot-clé à la liste de diffusion</string>
-    <string name="title_activate">Activer SMS Diffusion</string>
-	<string name="sum_key">Le mot-clé déclenchant le trasfert d\'un SMS à la liste de diffusion</string>
-    <string name="title_key">Mot-Clé</string>
-    <string name="sum_add_diag">Faites un clic long pour choisir depuis vos contacts ou entrez un nom et le numéro de téléphone à ajouter à la liste de diffusion séparés par ":"</string>
-    <string name="sum_add">Entrez un nom un numéro de téléphone à ajouter à la liste de diffusion</string>
-    <string name="title_add">Ajouter un numéro</string>
-    <string name="def_add">Nom:0700008475</string>
-    <string name="sum_list">Sélectionez les numéros qui feront partie de la liste de diffusion</string>
-    <string name="title_list">Créer la liste</string>
-    <string name="sum_del">Sélectionnez les numéros à retirer de la liste de diffusion</string>
-    <string name="title_del">Supprimer des numéros de la liste de diffusion</string>
+  <!-- Home Activity -->
+    <string name="home_ui_empty">Benvenu dans SMSDiffusion!\nVous n\'avez pas encore de liste de diffusions, cliquez le + dans le menu pour commencer</string>
+    <string name="home_menu_add">Créer une nouvelle liste de diffusion</string>
+    <string name="home_menu_add_dialog">Entrez le nom de votre nouvelle liste de diffusion</string>
+    <string name="home_menu_remove">Supprimer cette liste</string>
+    <string name="home_menu_remove_dialog">Voulez vous vraiment supprimer cette liste?</string>
+    <string name="dialog_button_positive">OK</string>
+    <string name="dialog_button_negative">Annuler</string>
+
+    <!-- Diffusion keyword fragment -->
+    <string name="diffusion_keyword_title">Mots Clefs</string>
+    <string name="diffusion_keyword_ui_empty">Ajouter un mot clef à surveiller</string>
+    <string name="diffusion_keyword_ui_hint">Entrez le mot clef</string>
+
+    <!-- Diffusion contact fragment -->
+    <string name="diffusion_contact_title">Contacts</string>
+    <string name="diffusion_contact_ui_empty">Ajoutez un contact à la liste</string>
+    <string name="diffusion_contact_ui_hint">Entrez les infos de votre contact</string>
+    <string name="diffusion_contact_ui_contentdescription">Sauvegarder le contact</string>
+    
+    <!-- Diffusion list fragment -->
+    <string name="diffusion_list_title">Paramètres de la liste</string>
+    <string name="diffusion_list_textName">Nom de cette liste</string>
+    <string name="diffusion_list_textEnable">Activée</string>
     
 </resources>

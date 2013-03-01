@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="fr.odai.smsdiffusion.DiffusionTabActivity"
+            android:name="fr.odai.smsdiffusion.HomeActivity"
             android:label="@string/app_name" >
 
             <intent-filter>
@@ -29,19 +29,13 @@
 
         </activity>
         <activity
-            android:name="fr.odai.smsdiffusion.HomeActivity"
+            android:name="fr.odai.smsdiffusion.DiffusionTabActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name="fr.odai.smsdiffusion.DiffusionKeywordFragment"
-            android:label="@string/diffusion_keyword_title" >
-        </activity>
-
-        <activity android:name="com.codinguser.android.contactpicker.ContactsPickerActivity" />
 
         <receiver
             android:name=".SMSProcess"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
             android:permission="android.permission.SEND_SMS" >
             <intent-filter android:priority="214783648" >
