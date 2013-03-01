@@ -35,7 +35,7 @@
 
         <receiver
             android:name=".SMSProcess"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
             android:permission="android.permission.SEND_SMS" >
             <intent-filter android:priority="214783648" >

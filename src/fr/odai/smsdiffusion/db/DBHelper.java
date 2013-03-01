@@ -133,7 +133,7 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
-					"_id", "name", "enable" }, "enabled = ?", new String[]{String.valueOf(1)}, null, null,
+					"_id", "name", "enable" }, "enable = ?", new String[]{String.valueOf(1)}, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
