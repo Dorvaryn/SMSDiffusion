@@ -10,16 +10,19 @@
     <string name="dialog_button_positive">OK</string>
     <string name="dialog_button_negative">Cancel</string>
 
-    <!-- Diffusion keyword activity -->
+    <!-- Diffusion keyword fragment -->
     <string name="diffusion_keyword_title">Keywords</string>
     <string name="diffusion_keyword_ui_empty">Add a keyword to monitor.</string>
     <string name="diffusion_keyword_ui_hint">Enter keyword</string>
 
-    <!-- Diffusion contact activity -->
+    <!-- Diffusion contact fragment -->
     <string name="diffusion_contact_title">Contacts</string>
     <string name="diffusion_contact_ui_empty">Add a contact to monitor</string>
     <string name="diffusion_contact_ui_hint">Enter contact info</string>
     <string name="diffusion_contact_ui_contentdescription">Save contact</string>
+    
+    <!-- Diffusion list fragment -->
+    <string name="diffusion_list_title">List Settings</string>
 
     <!-- Old strings -->
     <string name="action_settings">Settings</string>

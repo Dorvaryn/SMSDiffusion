@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,10 +29,6 @@ public class DiffusionKeywordFragment extends ListFragment {
 
 	private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 		@Override
-		public void onItemSelected(int position, Fragment source) {
-		}
-
-		@Override
 		public int getListId() {
 			return 0;
 		}
@@ -47,7 +42,7 @@ public class DiffusionKeywordFragment extends ListFragment {
 			setActivatedPosition(savedInstanceState
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
-		View root = inflater.inflate(R.layout.activity_diffusion_keyword,
+		View root = inflater.inflate(R.layout.fragment_diffusion_keyword,
 				container, false);
 
 		final EditText keyword = (EditText) root
@@ -111,13 +106,6 @@ public class DiffusionKeywordFragment extends ListFragment {
 	public void onDetach() {
 		super.onDetach();
 		mCallbacks = sDummyCallbacks;
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		super.onListItemClick(listView, view, position, id);
-		mCallbacks.onItemSelected(position, this);
 	}
 
 	@Override

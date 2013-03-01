@@ -86,7 +86,7 @@ public class HomeActivity extends ListActivity {
 								int whichButton) {
 							dialog.cancel();
 							String value = input.getText().toString();
-							DBHelper.insertList(getBaseContext(), value, true);
+							DBHelper.insertList(getBaseContext(), value, false);
 							setListAdapter(new ListAdapter(
 									getBaseContext(),
 									R.layout.item_list,

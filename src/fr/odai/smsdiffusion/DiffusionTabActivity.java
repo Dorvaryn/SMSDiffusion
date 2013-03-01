@@ -81,12 +81,13 @@ public class DiffusionTabActivity extends FragmentActivity implements
 		mTabHost.setup();
 		TabInfo tabInfo = null;
 		Resources res = getResources();
+		
 		DiffusionTabActivity.addTab(
 				this,
 				this.mTabHost,
-				this.mTabHost.newTabSpec("Contacts").setIndicator(
-						res.getString(R.string.diffusion_contact_title)),
-				(tabInfo = new TabInfo("Contacts", DiffusionContactFragment.class, args)));
+				this.mTabHost.newTabSpec("List").setIndicator(
+						res.getString(R.string.diffusion_list_title)),
+				(tabInfo = new TabInfo("List", DiffusionListFragment.class, args)));
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
 		
 		DiffusionTabActivity.addTab(
@@ -97,8 +98,16 @@ public class DiffusionTabActivity extends FragmentActivity implements
 				(tabInfo = new TabInfo("Keywords", DiffusionKeywordFragment.class, args)));
 		this.mapTabInfo.put(tabInfo.tag, tabInfo);
 
+		DiffusionTabActivity.addTab(
+				this,
+				this.mTabHost,
+				this.mTabHost.newTabSpec("Contacts").setIndicator(
+						res.getString(R.string.diffusion_contact_title)),
+				(tabInfo = new TabInfo("Contacts", DiffusionContactFragment.class, args)));
+		this.mapTabInfo.put(tabInfo.tag, tabInfo);
+		
 		// Tab par défaut
-		this.onTabChanged("Contacts");
+		this.onTabChanged("List");
 		mTabHost.setOnTabChangedListener(this);
 	}
 
@@ -164,11 +173,6 @@ public class DiffusionTabActivity extends FragmentActivity implements
 			ft.commit();
 			this.getSupportFragmentManager().executePendingTransactions();
 		}
-	}
-
-	@Override
-	public void onItemSelected(int position, Fragment source) {
-		
 	}
 
 	@Override
