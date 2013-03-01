@@ -26,6 +26,19 @@ public class POJOContact {
 		contactCursor.moveToFirst();
 		this.name = contactCursor.getString(contactCursor
 				.getColumnIndex(CommonDataKinds.Phone.DISPLAY_NAME));
+		this.lookupKey = contactCursor.getString(contactCursor
+				.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+		String photoId = contactCursor.getString(contactCursor
+				.getColumnIndex(ContactsContract.Contacts.PHOTO_ID));
+		if (photoId != null) {
+			this.icon = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI,
+					Long.parseLong(photoId));
+		}
+		this.phoneType = CommonDataKinds.Phone.getTypeLabel(
+				ctx.getResources(),
+				contactCursor.getInt(contactCursor.getColumnIndex(CommonDataKinds.Phone.TYPE)),
+				contactCursor.getString(contactCursor
+						.getColumnIndex(CommonDataKinds.Phone.LABEL))).toString();
 	}
 	
 	public String toString() {

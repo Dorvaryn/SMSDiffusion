@@ -2,57 +2,136 @@ package fr.odai.smsdiffusion;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import fr.odai.smsdiffusion.adapter.ContactAdapter;
 import fr.odai.smsdiffusion.adapter.POJOContact;
 import fr.odai.smsdiffusion.adapter.SwipeDismissListViewTouchListener;
+import fr.odai.smsdiffusion.db.DBHelper;
 
 public class DiffusionContactFragment extends ListFragment {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.activity_diffusion_contact, container, false);
-		// List adapter
-		final ContactAdapter adapter = new ContactAdapter(getActivity(), R.layout.item_contact, new ArrayList<POJOContact>());
-		setListAdapter(adapter);
-		
-		// Autocomplete adapter
-		final AutoCompleteTextView phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
-		ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
-		final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
-				allContacts);
-		
+		private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-		phoneNumber.setAdapter(autoAdapter);
-		phoneNumber.setOnItemClickListener(new OnItemClickListener() {
+		private FragementCallbacks mCallbacks = sDummyCallbacks;
+		private int mActivatedPosition = ListView.INVALID_POSITION;
 
+		
+		private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 			@Override
-			public void onItemClick(AdapterView<?> contactAdapter, View arg1, int position, long arg3) {
-				adapter.add(autoAdapter.getItem(position));
-				phoneNumber.setText("");
+			public void onItemSelected(int position, Fragment source) {
 			}
-		});	
+			@Override
+			public int getListId() {
+				return 0;
+			}
+		};
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+				setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+			}View root = inflater.inflate(R.layout.activity_diffusion_contact, container, false);
+			
+			// Autocomplete adapter
+			final AutoCompleteTextView phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
+			ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
+			final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
+					allContacts);
+			
+
+			phoneNumber.setAdapter(autoAdapter);
+			phoneNumber.setOnItemClickListener(new OnItemClickListener() {
+
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onItemClick(AdapterView<?> contactAdapter, View arg1, int position, long arg3) {
+					POJOContact newContact = autoAdapter.getItem(position);
+					DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+					((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+					phoneNumber.setText("");
+				}
+			});	
+			
+			return root;
+		}
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			this.setRetainInstance(true);
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			if (!(activity instanceof FragementCallbacks)) {
+				throw new IllegalStateException("Activity must implement fragment's callbacks.");
+			}
+			mCallbacks = (FragementCallbacks) activity;
+		}
+
 		
-		return root;
-	}
+		@Override
+		public void onResume() {
+			super.onResume();
+			ArrayList<POJOContact> contacts = DBHelper.getContacts(getActivity(), mCallbacks.getListId());
+			// List adapter
+			final ContactAdapter adapter = new ContactAdapter(getActivity(), R.layout.item_contact, contacts);
+			setListAdapter(adapter);
+		}
+
+		@Override
+		public void onDetach() {
+			super.onDetach();
+			mCallbacks = sDummyCallbacks;
+		}
+
+		@Override
+		public void onListItemClick(ListView listView, View view, int position, long id) {
+			super.onListItemClick(listView, view, position, id);
+			mCallbacks.onItemSelected(position, this);
+		}
+
+		@Override
+		public void onSaveInstanceState(Bundle outState) {
+			super.onSaveInstanceState(outState);
+			if (mActivatedPosition != ListView.INVALID_POSITION) {
+				outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+			}
+		}
+
+		public void setActivateOnItemClick(boolean activateOnItemClick) {
+			getListView().setChoiceMode(
+					activateOnItemClick ? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
+		}
+
+		public void setActivatedPosition(int position) {
+			if (position == ListView.INVALID_POSITION) {
+				getListView().setItemChecked(mActivatedPosition, false);
+			} else {
+				getListView().setItemChecked(position, true);
+			}
+
+			mActivatedPosition = position;
+		}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ListView listView = getListView();
-		final ArrayAdapter<POJOContact> adapter = (ArrayAdapter<POJOContact>) getListAdapter();
 		SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
                 		listView,
@@ -60,9 +139,11 @@ public class DiffusionContactFragment extends ListFragment {
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                	adapter.remove(adapter.getItem(position));
+                                	POJOContact toDelete = (POJOContact) getListAdapter().getItem(position);
+                                	((ArrayAdapter<POJOContact>) getListAdapter()).remove(toDelete);
+                                	DBHelper.removeContact(getActivity(), mCallbacks.getListId(), toDelete.phone);                                	
                                 }
-                                adapter.notifyDataSetChanged();
+                                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                             }
                         });
         listView.setOnTouchListener(touchListener);

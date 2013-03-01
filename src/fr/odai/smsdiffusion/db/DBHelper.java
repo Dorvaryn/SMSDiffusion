@@ -43,7 +43,7 @@ public class DBHelper {
 		}
 	}
 
-	public static void insertList(Context context, String name, int enable) {
+	public static void insertList(Context context, String name, boolean enable) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 
@@ -63,7 +63,7 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "contacts",
-					new String[] { "number" }, null, null, null, null,
+					new String[] { "number" }, "list_id = ?", new String[]{String.valueOf(list_id)}, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
@@ -103,6 +103,23 @@ public class DBHelper {
 		}
 		return lists;
 	}
+	
+	public static POJOList getDiffusionList(Context context, int list_id) {
+		POJOList entry;
+		synchronized (DBHelper.sDataLock) {
+			SQLiteDatabase db = getDatabase(context);
+
+			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
+					"_id", "name", "enable" }, "_id = ?", new String[]{String.valueOf(list_id)}, null, null,
+					"_id DESC", null);
+			cursor.moveToFirst();
+			boolean enable = cursor.getInt(2) == 1;
+			entry = new POJOList(cursor.getInt(0),
+					cursor.getString(1), enable);			
+			db.close();
+		}
+		return entry;
+	}
 
 	public static ArrayList<String> getKeywords(Context context, int list_id) {
 
@@ -111,7 +128,7 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "keywords",
-					new String[] { "value" }, null, null, null, null,
+					new String[] { "value" }, "list_id = ?", new String[]{String.valueOf(list_id)}, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
