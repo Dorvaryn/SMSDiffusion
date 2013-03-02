@@ -46,6 +46,10 @@ public class DiffusionKeywordFragment extends ListFragment implements
 		public long getListId() {
 			return 0;
 		}
+
+		@Override
+		public void updateTitle(String title) {
+		}
 	};
 
 	@Override

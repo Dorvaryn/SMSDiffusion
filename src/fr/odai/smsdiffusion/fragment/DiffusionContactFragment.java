@@ -50,6 +50,10 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 			public long getListId() {
 				return 0;
 			}
+
+			@Override
+			public void updateTitle(String title) {
+			}
 		};
 
 		@Override

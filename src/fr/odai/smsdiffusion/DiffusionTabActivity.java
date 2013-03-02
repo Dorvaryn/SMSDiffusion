@@ -245,4 +245,9 @@ public class DiffusionTabActivity extends FragmentActivity implements
 		return ret;
 	}
 
+	@Override
+	public void updateTitle(String title) {
+		setTitle(title);
+	}
+
 }

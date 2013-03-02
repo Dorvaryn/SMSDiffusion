@@ -25,6 +25,10 @@ public class DiffusionListFragment extends Fragment {
 		public long getListId() {
 			return 0;
 		}
+
+		@Override
+		public void updateTitle(String title) {
+		}
 	};
 
 	@Override
@@ -66,7 +70,10 @@ public class DiffusionListFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		list.enable = enabled.isChecked();
-		list.name = name.getText().toString();
+		if(!name.getText().toString().equalsIgnoreCase("")){
+			list.name = name.getText().toString();
+			mCallbacks.updateTitle(list.name);
+		}
 		DBHelper.updateList(getActivity(), list);
 	}
 
