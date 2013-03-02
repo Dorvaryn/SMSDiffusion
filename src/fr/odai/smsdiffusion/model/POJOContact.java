@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion.adapter;
+package fr.odai.smsdiffusion.model;
 
 import java.util.ArrayList;
 

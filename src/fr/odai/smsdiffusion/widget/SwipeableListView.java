@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.widget;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import fr.odai.smsdiffusion.SwipeableListItem.SwipeEvent;
+import fr.odai.smsdiffusion.widget.SwipeableListItem.SwipeEvent;
 
 /**
  * List which supports swipeable item views.<br>

@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.widget;
 
 import java.lang.reflect.Field;
 
@@ -16,7 +16,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import fr.odai.smsdiffusion.SwipeableHiddenView.HiddenViewSetup.SwipeDirection;
+import fr.odai.smsdiffusion.widget.SwipeableHiddenView.HiddenViewSetup.SwipeDirection;
 
 /**
  * Swipeable view for {@link SwipeableListView} which hides a view behind an item.<br>

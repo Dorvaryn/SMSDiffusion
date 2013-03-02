@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import fr.odai.smsdiffusion.HiddenQuickActionSetup;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.SwipeableHiddenView;
+import fr.odai.smsdiffusion.model.POJOList;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
+import fr.odai.smsdiffusion.widget.SwipeableHiddenView;
 
 public class ListAdapter extends ArrayAdapter<POJOList> {
 	private HiddenQuickActionSetup mQuickActionSetup;

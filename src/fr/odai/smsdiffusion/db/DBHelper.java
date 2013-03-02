@@ -6,8 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fr.odai.smsdiffusion.adapter.POJOContact;
-import fr.odai.smsdiffusion.adapter.POJOList;
+import fr.odai.smsdiffusion.model.POJOContact;
+import fr.odai.smsdiffusion.model.POJOList;
 
 public class DBHelper {
 

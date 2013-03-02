@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.fragment;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import fr.odai.smsdiffusion.HiddenQuickActionSetup.OnQuickActionListener;
+import fr.odai.smsdiffusion.FragementCallbacks;
+import fr.odai.smsdiffusion.R;
+import fr.odai.smsdiffusion.R.drawable;
+import fr.odai.smsdiffusion.R.id;
+import fr.odai.smsdiffusion.R.layout;
+import fr.odai.smsdiffusion.R.string;
 import fr.odai.smsdiffusion.adapter.KeywordAdapter;
 import fr.odai.smsdiffusion.db.DBHelper;
 import fr.odai.smsdiffusion.utils.AndroidUtils;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup.OnQuickActionListener;
 
 public class DiffusionKeywordFragment extends ListFragment implements
 		OnQuickActionListener {

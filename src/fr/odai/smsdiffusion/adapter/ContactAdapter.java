@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
-import fr.odai.smsdiffusion.HiddenQuickActionSetup;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.SwipeableHiddenView;
+import fr.odai.smsdiffusion.model.POJOContact;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
+import fr.odai.smsdiffusion.widget.SwipeableHiddenView;
 
 public class ContactAdapter extends ArrayAdapter<POJOContact> {
 

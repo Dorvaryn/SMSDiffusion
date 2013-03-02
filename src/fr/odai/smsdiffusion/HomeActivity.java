@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import fr.odai.smsdiffusion.HiddenQuickActionSetup.OnQuickActionListener;
 import fr.odai.smsdiffusion.adapter.ListAdapter;
-import fr.odai.smsdiffusion.adapter.POJOList;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.model.POJOList;
 import fr.odai.smsdiffusion.utils.AndroidUtils;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
+import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup.OnQuickActionListener;
 
 public class HomeActivity extends ListActivity implements OnQuickActionListener {
 

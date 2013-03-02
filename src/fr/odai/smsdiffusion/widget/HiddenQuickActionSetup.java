@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,8 +21,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import fr.odai.smsdiffusion.SwipeableHiddenView.HiddenViewSetup;
+import fr.odai.smsdiffusion.R;
+import fr.odai.smsdiffusion.R.style;
 import fr.odai.smsdiffusion.utils.AndroidUtils;
+import fr.odai.smsdiffusion.widget.SwipeableHiddenView.HiddenViewSetup;
 
 /**
  * Quick action setup for {@link SwipeableHiddenView}.<br>

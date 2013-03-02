@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import fr.odai.smsdiffusion.adapter.POJOList;
+import fr.odai.smsdiffusion.FragementCallbacks;
+import fr.odai.smsdiffusion.R;
+import fr.odai.smsdiffusion.R.id;
+import fr.odai.smsdiffusion.R.layout;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.model.POJOList;
 
 public class DiffusionListFragment extends Fragment {
 

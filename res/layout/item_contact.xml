@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fr.odai.smsdiffusion.SwipeableHiddenView xmlns:android="http://schemas.android.com/apk/res/android"
+<fr.odai.smsdiffusion.widget.SwipeableHiddenView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -50,4 +50,4 @@
             android:layout_height="50dp" />
     </LinearLayout>
 
-</fr.odai.smsdiffusion.SwipeableHiddenView>
+</fr.odai.smsdiffusion.widget.SwipeableHiddenView>

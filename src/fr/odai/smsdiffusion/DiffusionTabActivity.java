@@ -2,6 +2,10 @@ package fr.odai.smsdiffusion;
 
 import java.util.HashMap;
 
+import fr.odai.smsdiffusion.fragment.DiffusionContactFragment;
+import fr.odai.smsdiffusion.fragment.DiffusionKeywordFragment;
+import fr.odai.smsdiffusion.fragment.DiffusionListFragment;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;

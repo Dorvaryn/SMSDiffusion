@@ -28,11 +28,11 @@
             android:src="@drawable/ic_add" />
     </LinearLayout>
 
-    <fr.odai.smsdiffusion.SwipeableListView
+    <fr.odai.smsdiffusion.widget.SwipeableListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </fr.odai.smsdiffusion.SwipeableListView>
+    </fr.odai.smsdiffusion.widget.SwipeableListView>
 
     <TextView
         android:id="@android:id/empty"
