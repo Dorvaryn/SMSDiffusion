@@ -14,7 +14,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
-import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
@@ -67,6 +66,7 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 	private SwipeableListItem mSwipeableView;
 	
 	private boolean mSwipeStarted = false;
+	 private boolean mPaused = false;
 	private int mSwipeablePosition = INVALID_POSITION;
 	
 	private boolean mConsumeClick = false;
@@ -113,18 +113,21 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 		super(context);
 		initialize();
 		setOnTouchListener(this);
+		setOnScrollListener(this.makeScrollListener());
 	}
 	
 	public SwipeableListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize();
 		setOnTouchListener(this);
+		setOnScrollListener(this.makeScrollListener());
 	}
 	
 	public SwipeableListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initialize();
 		setOnTouchListener(this);
+		setOnScrollListener(this.makeScrollListener());
 	}
 	
 	
@@ -330,6 +333,23 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 		super.dispatchDraw(canvas);
 	}
 	
+	 public void setTouchEnabled(boolean enabled) {
+	        mPaused = !enabled;
+	    }
+	
+	public AbsListView.OnScrollListener makeScrollListener() {
+        return new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+            	setTouchEnabled(scrollState != AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+            }
+        };
+    }
+	
 	// PRIVATE ====================================================================================
 	
 	private void initialize() {
@@ -343,6 +363,9 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 		
 		
 		if (action == MotionEvent.ACTION_DOWN) {
+			if (mPaused) {
+                return false;
+            }
 			if (intercept) {
 				setupSwipeableClick(ev);
 				super.onInterceptTouchEvent(ev);
@@ -354,12 +377,12 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 		} else if (action == MotionEvent.ACTION_MOVE) {
 			// this calculated slop will always trigger the list to scroll
 			// so a started swipe should be canceled anyway
-			if (mSwipeableView != null
+			/*if (mSwipeableView != null
 					&& Math.abs((int) ev.getY() - mStartY) > ViewConfiguration.getTouchSlop()
 							* getContext().getResources().getDisplayMetrics().density + 0.5f * 2) {
 				cancelSwipe();
 				return super.onTouchEvent(ev);
-			}
+			}*/
 			
 			if (intercept) {
 				if (mSwipeableView != null) {

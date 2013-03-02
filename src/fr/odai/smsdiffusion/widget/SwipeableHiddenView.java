@@ -647,6 +647,7 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 				mCurrentListView = v.mCurrentListView;
 				mCurrentPosition = v.mCurrentPosition;
 				mLastOffset = v.mLastOffset;
+				lastOverlayOffset = v.lastOverlayOffset;
 				mOffset = v.mOffset;
 				
 				bindHiddenView();
@@ -1152,7 +1153,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 				} else if (!mAnimateForward
 						&& (offsetBefore >= 0 && mOffset <= 0 || offsetBefore < 0 && mOffset >= 0)) {
 					mOffset = 0f;
-					lastOverlayOffset = 0;
 					mAnimating = false;
 					requestLayout();
 				}
