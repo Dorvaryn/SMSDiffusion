@@ -129,10 +129,12 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 				public boolean onEditorAction(TextView v, int actionId,
 						KeyEvent event) {
 					if (actionId == EditorInfo.IME_ACTION_DONE) {
-						POJOContact newContact = autoAdapter.getItem(0);
-						DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
-						((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
-						phoneNumber.setText("");
+						if(!autoAdapter.isEmpty()){
+							POJOContact newContact = autoAdapter.getItem(0);
+							DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+							((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+							phoneNumber.setText("");
+						}
 						return true;
 					}
 					return false;
