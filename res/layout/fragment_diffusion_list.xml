@@ -26,6 +26,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/editName"
         android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/ic_settings"
         android:text="@string/diffusion_list_titleSetting" />
 
     <TextView
@@ -63,6 +64,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textEnableHelp"
         android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/ic_infos"
         android:text="@string/diffusion_list_titleInfos" />
 
     <TextView
