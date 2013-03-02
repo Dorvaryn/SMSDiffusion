@@ -524,10 +524,14 @@ public class SwipeableListView extends ListView implements OnScrollListener, Vie
 		
 		// send close event to old swipeable if it's not the same
 		if (mSwipeableView != null && mSwipeablePosition != oldPosition) {
-			int newPosition = mSwipeablePosition;
-			mSwipeablePosition = oldPosition;
-			sendSwipe(SwipeEvent.CLOSE);
-			mSwipeablePosition = newPosition;
+			if(mSwipeablePosition != -1){
+				int newPosition = mSwipeablePosition;
+				mSwipeablePosition = oldPosition;
+				sendSwipe(SwipeEvent.CLOSE);
+				mSwipeablePosition = newPosition;
+			}else {
+				sendSwipe(SwipeEvent.CANCEL);
+			}
 		}
 		
 		if (view != null) {

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -155,6 +156,21 @@ public class DiffusionKeywordFragment extends ListFragment implements
 		mQuickActionSetup.setOnQuickActionListener(this);
 
 		int imageSize = AndroidUtils.dipToPixel(ctx, 40);
+		
+		// a nice cubic ease animation
+		mQuickActionSetup.setOpenAnimation(new Interpolator() {
+			@Override
+			public float getInterpolation(float v) {
+				v -= 1;
+				return v * v * v + 1;
+			}
+		});
+		mQuickActionSetup.setCloseAnimation(new Interpolator() {
+			@Override
+			public float getInterpolation(float v) {
+				return v * v * v;
+			}
+		});
 
 		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
 		mQuickActionSetup.setImageSize(imageSize, imageSize);

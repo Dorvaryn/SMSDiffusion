@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -718,8 +717,8 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 			break;
 		
 		case CLOSE:
-		case CANCEL:
 			lastOverlayOffset = 0;
+		case CANCEL:
 			animate(false);
 			break;
 		
@@ -878,7 +877,7 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 			
 			canvas.restore();
 			
-			int overlayOffset = Math.round(offset);
+			int overlayOffset = (int) Math.ceil(offset);
 			overlayOffset = mOffset >= 0 ? overlayOffset : -overlayOffset;
 
 			mOverlayView.offsetLeftAndRight(-lastOverlayOffset);

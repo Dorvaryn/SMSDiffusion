@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Interpolator;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.odai.smsdiffusion.adapter.ListAdapter;
@@ -60,7 +61,8 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 		// Click on title in actionbar
 		switch (item.getItemId()) {
 		case R.id.menu_add:
-			long id = DBHelper.insertList(getBaseContext(), getResources().getString(R.string.home_default_list_name), true);
+			long id = DBHelper.insertList(getBaseContext(), getResources()
+					.getString(R.string.home_default_list_name), true);
 			Intent it = new Intent(this, DiffusionTabActivity.class);
 			it.putExtra("list_id", id);
 			startActivity(it);
@@ -75,6 +77,21 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 		mQuickActionSetup.setOnQuickActionListener(this);
 
 		int imageSize = AndroidUtils.dipToPixel(this, 40);
+
+		// a nice cubic ease animation
+		mQuickActionSetup.setOpenAnimation(new Interpolator() {
+			@Override
+			public float getInterpolation(float v) {
+				v -= 1;
+				return v * v * v + 1;
+			}
+		});
+		mQuickActionSetup.setCloseAnimation(new Interpolator() {
+			@Override
+			public float getInterpolation(float v) {
+				return v * v * v;
+			}
+		});
 
 		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
 		mQuickActionSetup.setImageSize(imageSize, imageSize);
@@ -95,9 +112,9 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 		switch (quickActionId) {
 		case QuickAction.CONFIRM:
 			POJOList toDelete = (POJOList) getListAdapter().getItem(position);
-        	DBHelper.removeList(this, toDelete.getId());
-        	setListAdapter(new ListAdapter(this, R.layout.item_list,
-    				DBHelper.getDiffusionLists(this), mQuickActionSetup));
+			DBHelper.removeList(this, toDelete.getId());
+			setListAdapter(new ListAdapter(this, R.layout.item_list,
+					DBHelper.getDiffusionLists(this), mQuickActionSetup));
 			break;
 
 		default:

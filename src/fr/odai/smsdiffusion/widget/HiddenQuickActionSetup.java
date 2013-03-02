@@ -482,11 +482,12 @@ public class HiddenQuickActionSetup extends HiddenViewSetup {
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
+		//params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
 		iv.setLayoutParams(params);
 		iv.setText(confirmationMessageResId);
 		iv.setGravity(Gravity.CENTER);
-		iv.setPadding(50, 0, 50, 0);
+		iv.setPadding(0, 0, 42, 0);
 		TypedArray a = mLinearLayout.getContext().obtainStyledAttributes(R.style.AppBaseTheme, new int[] {android.R.attr.textAppearanceMediumInverse});     
 		int attributeResourceId = a.getResourceId(0, -1);
 		if(attributeResourceId != -1){
@@ -503,7 +504,7 @@ public class HiddenQuickActionSetup extends HiddenViewSetup {
 		View ruler = new View(mLinearLayout.getContext()); 
 		ruler.setBackgroundColor(mLinearLayout.getContext().getResources().getColor(android.R.color.primary_text_dark));
 		LayoutParams paramsV = new LayoutParams(3 , ViewGroup.LayoutParams.MATCH_PARENT);
-		paramsV.setMargins(0, 10, 0, 10);
+		paramsV.setMargins(0, 15, 0, 15);
 		mLinearLayout.addView(ruler,paramsV);
 		
 		TextView iv2 = new TextView(mLinearLayout.getContext());
@@ -516,7 +517,7 @@ public class HiddenQuickActionSetup extends HiddenViewSetup {
 		iv2.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
 		iv2.setText(confirmActionResId);
 		iv2.setGravity(Gravity.CENTER);
-		iv2.setPadding(50, 0, 50, 0);
+		iv2.setPadding(42, 0, 42, 0);
 		if(attributeResourceId != -1){
 			iv2.setTextAppearance(mLinearLayout.getContext(), attributeResourceId);
 		}
