@@ -28,7 +28,11 @@
     
     <!-- Diffusion list fragment -->
     <string name="diffusion_list_title">List Settings</string>
-	<string name="diffusion_list_textName">Name of this list</string>
-    <string name="diffusion_list_textEnable">Enabled</string>
+	<string name="diffusion_list_textHint">List name</string>
+	<string name="diffusion_list_titleSetting">List settings</string>
+	<string name="diffusion_list_titleInfos">About this list</string>
+	<string name="diffusion_list_textInfos">Add keywords to monitor using the "keyword" tab. Any incoming messages matching this keywords will be automatically forwarded to the contacts you selected in "contacts" tabs.</string>
+    <string name="diffusion_list_textEnable">Enable this list</string>
+    <string name="diffusion_list_textEnableHelp">Define whether sms matching this list keyword should be forwarded.</string>
     
 </resources>

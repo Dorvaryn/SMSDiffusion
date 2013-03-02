@@ -4,45 +4,35 @@
     android:layout_height="match_parent"
     android:padding="5dp" >
 
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:singleLine="true"
-        android:text="@string/diffusion_list_textName"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textName"
+        android:layout_alignParentRight="true"
         android:ems="10"
-        android:nextFocusUp="@+id/editName" android:nextFocusLeft="@+id/editName" >
-    </EditText>
+        android:hint="@string/diffusion_list_textHint"
+        android:nextFocusLeft="@+id/editName"
+        android:nextFocusUp="@+id/editName" >
 
-    <View
-        android:id="@+id/ruler"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/editName"
-        android:layout_margin="5dp"
-        android:background="?android:attr/listDivider" />
+    </EditText>
+    
+    <TextView
+        android:id="@+id/titleSetting"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/editName"
+        android:drawablePadding="5dp"
+        android:text="@string/diffusion_list_titleSetting" />
 
     <TextView
         android:id="@+id/textEnable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ruler"
+        android:layout_below="@id/titleSetting"
         android:text="@string/diffusion_list_textEnable"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -53,5 +43,35 @@
         android:layout_alignBaseline="@+id/textEnable"
         android:layout_alignParentRight="true"
         layout="@layout/switch_check" />
+
+    <TextView
+        android:id="@+id/textEnableHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textEnable"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textEnable"
+        android:text="@string/diffusion_list_textEnableHelp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/titleInfos"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textEnableHelp"
+        android:drawablePadding="5dp"
+        android:text="@string/diffusion_list_titleInfos" />
+
+    <TextView
+        android:id="@+id/infos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/titleInfos"
+        android:text="@string/diffusion_list_textInfos"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

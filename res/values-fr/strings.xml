@@ -26,7 +26,7 @@
     
     <!-- Diffusion list fragment -->
     <string name="diffusion_list_title">Paramètres de la liste</string>
-    <string name="diffusion_list_textName">Nom de cette liste</string>
+    <string name="diffusion_list_textHint">Nom de cette liste</string>
     <string name="diffusion_list_textEnable">Activée</string>
     
 </resources>
