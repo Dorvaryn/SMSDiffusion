@@ -79,8 +79,8 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
 		mQuickActionSetup.setImageSize(imageSize, imageSize);
 		mQuickActionSetup.setAnimationSpeed(700);
-		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(this, 0));
-		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(this, 0));
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(this, 5));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(this, 20));
 		mQuickActionSetup.setStickyStart(false);
 		mQuickActionSetup.setSwipeOnLongClick(true);
 

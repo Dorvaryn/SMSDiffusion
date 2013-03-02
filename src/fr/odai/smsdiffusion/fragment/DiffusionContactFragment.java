@@ -191,8 +191,8 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
 		mQuickActionSetup.setImageSize(imageSize, imageSize);
 		mQuickActionSetup.setAnimationSpeed(700);
-		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 0));
-		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 0));
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 5));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 20));
 		mQuickActionSetup.setStickyStart(false);
 		mQuickActionSetup.setSwipeOnLongClick(true);
 
