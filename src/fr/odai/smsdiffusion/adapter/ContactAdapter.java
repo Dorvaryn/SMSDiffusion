@@ -18,12 +18,10 @@ import fr.odai.smsdiffusion.widget.SwipeableHiddenView;
 
 public class ContactAdapter extends ArrayAdapter<POJOContact> {
 
-	public ArrayList<POJOContact> contacts;
 	private HiddenQuickActionSetup mQuickActionSetup;
 	
 	public ContactAdapter(Context context, int textViewResourceId, ArrayList<POJOContact> contacts, HiddenQuickActionSetup setup) {
 		super(context, textViewResourceId, contacts);
-		this.contacts = contacts;
 		this.mQuickActionSetup = setup;
 	}
 	

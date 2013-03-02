@@ -7,7 +7,7 @@
     <string name="home_ui_empty">Welcome to SMSDiffusion!\nYou don\'t have any diffusions list now, click the "+" in the menu to get started.</string>
     <string name="home_menu_add">Create new diffusion list</string>
     <string name="home_menu_add_dialog">Enter the name of your new diffusion list</string>
-    <string name="home_remove_message">Delete this list?</string>
+    <string name="home_remove_message">Delete this list ?</string>
     <string name="home_remove_confirm">OK</string>
     <string name="dialog_button_positive">OK</string>
     <string name="dialog_button_negative">Cancel</string>
@@ -16,7 +16,7 @@
     <string name="diffusion_keyword_title">Keywords</string>
     <string name="diffusion_keyword_ui_empty">Add a keyword to monitor.</string>
     <string name="diffusion_keyword_ui_hint">Enter keyword</string>
-    <string name="diffusion_keyword_remove_message">Delete this keyword?</string>
+    <string name="diffusion_keyword_remove_message">Delete this keyword ?</string>
     <string name="diffusion_keyword_remove_confirm">OK</string>
 
     <!-- Diffusion contact fragment -->
@@ -24,7 +24,7 @@
     <string name="diffusion_contact_ui_empty">Add a contact to the list</string>
     <string name="diffusion_contact_ui_hint">Enter contact info</string>
     <string name="diffusion_contact_ui_contentdescription">Save contact</string>
-    <string name="diffusion_contact_remove_message">Delete this contact?</string>
+    <string name="diffusion_contact_remove_message">Delete this contact ?</string>
     <string name="diffusion_contact_remove_confirm">OK</string>
     
     <!-- Diffusion list fragment -->

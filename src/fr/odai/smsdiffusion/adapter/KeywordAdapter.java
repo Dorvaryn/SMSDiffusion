@@ -13,11 +13,14 @@ import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
 import fr.odai.smsdiffusion.widget.SwipeableHiddenView;
 
 public class KeywordAdapter extends ArrayAdapter<String> {
+	
+	private ArrayList<String> keywords;
 	private HiddenQuickActionSetup mQuickActionSetup;
 	
-	public KeywordAdapter(Context context, int textViewResourceId, ArrayList<String> lists, HiddenQuickActionSetup setup) {
-		super(context, textViewResourceId, lists);
-		mQuickActionSetup = setup;
+	public KeywordAdapter(Context context, int textViewResourceId, ArrayList<String> keywords, HiddenQuickActionSetup setup) {
+		super(context, textViewResourceId, keywords);
+		this.mQuickActionSetup = setup;
+		this.keywords = keywords;
 	}
 
 	@Override
@@ -46,5 +49,9 @@ public class KeywordAdapter extends ArrayAdapter<String> {
 
 	private class ViewHolder {
 		public TextView value;
+	}
+	
+	public boolean contains(String keyword){
+		return keywords.contains(keyword);
 	}
 }

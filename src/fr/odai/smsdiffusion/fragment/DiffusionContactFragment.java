@@ -1,6 +1,7 @@
 package fr.odai.smsdiffusion.fragment;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,10 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import fr.odai.smsdiffusion.FragementCallbacks;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.R.drawable;
-import fr.odai.smsdiffusion.R.id;
-import fr.odai.smsdiffusion.R.layout;
-import fr.odai.smsdiffusion.R.string;
 import fr.odai.smsdiffusion.adapter.ContactAdapter;
 import fr.odai.smsdiffusion.db.DBHelper;
 import fr.odai.smsdiffusion.model.POJOContact;
@@ -45,6 +42,8 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 		}
 
 		private HiddenQuickActionSetup mQuickActionSetup;
+		private AutoCompleteTextView phoneNumber;
+		private ImageButton add;
 		
 		private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 			@Override
@@ -60,40 +59,9 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 			}View root = inflater.inflate(R.layout.fragment_diffusion_contact, container, false);
 
 			setupQuickAction();
-			// Autocomplete adapter
-			final AutoCompleteTextView phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
-			ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
-			final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
-					allContacts, mQuickActionSetup);
+			phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
+			add = (ImageButton) root.findViewById(R.id.button_add);
 			
-
-			phoneNumber.setAdapter(autoAdapter);
-			phoneNumber.setOnItemClickListener(new OnItemClickListener() {
-
-				@SuppressWarnings("unchecked")
-				@Override
-				public void onItemClick(AdapterView<?> contactAdapter, View arg1, int position, long arg3) {
-					POJOContact newContact = autoAdapter.getItem(position);
-					DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
-					((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
-					phoneNumber.setText("");
-				}
-			});	
-			
-			final ImageButton add = (ImageButton) root.findViewById(R.id.button_add);
-			add.setOnClickListener(new OnClickListener() {
-				
-				@SuppressWarnings("unchecked")
-				@Override
-				public void onClick(View v) {
-					if(!phoneNumber.getText().toString().equalsIgnoreCase("")){
-						POJOContact newContact = autoAdapter.getItem(0);
-						DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
-						((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
-						phoneNumber.setText("");
-					}
-				}
-			});
 			
 			phoneNumber.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
 				@Override
@@ -132,6 +100,52 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 			// List adapter
 			final ContactAdapter adapter = new ContactAdapter(getActivity(), R.layout.item_contact, contacts, mQuickActionSetup);
 			setListAdapter(adapter);
+			
+			//Purge the search adapter from all contacts already in this list
+			//TODO: remove this by implementing a filterable search in database
+			ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
+			for (Iterator iterator = allContacts.iterator(); iterator.hasNext();) {
+				POJOContact contact = (POJOContact) iterator.next();
+				for (Iterator iterator2 = contacts.iterator(); iterator2
+						.hasNext();) {
+					POJOContact exists = (POJOContact) iterator2.next();
+					if(exists.phone.equalsIgnoreCase(contact.phone)){
+						iterator.remove();
+					}
+				}
+			}
+			
+			final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
+					allContacts, mQuickActionSetup);
+			
+
+			phoneNumber.setAdapter(autoAdapter);
+			phoneNumber.setOnItemClickListener(new OnItemClickListener() {
+
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onItemClick(AdapterView<?> contactAdapter, View arg1, int position, long arg3) {
+					POJOContact newContact = autoAdapter.getItem(position);
+					DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+					((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+					phoneNumber.setText("");
+					autoAdapter.remove(newContact);
+				}
+			});	
+			
+			add.setOnClickListener(new OnClickListener() {
+				
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onClick(View v) {
+					if(!phoneNumber.getText().toString().equalsIgnoreCase("")){
+						POJOContact newContact = autoAdapter.getItem(0);
+						DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
+						((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
+						phoneNumber.setText("");
+					}
+				}
+			});
 		}
 
 		@Override

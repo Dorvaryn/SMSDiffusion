@@ -21,10 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import fr.odai.smsdiffusion.FragementCallbacks;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.R.drawable;
-import fr.odai.smsdiffusion.R.id;
-import fr.odai.smsdiffusion.R.layout;
-import fr.odai.smsdiffusion.R.string;
 import fr.odai.smsdiffusion.adapter.KeywordAdapter;
 import fr.odai.smsdiffusion.db.DBHelper;
 import fr.odai.smsdiffusion.utils.AndroidUtils;
@@ -72,11 +68,17 @@ public class DiffusionKeywordFragment extends ListFragment implements
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onClick(View v) {
-				DBHelper.insertKeyword(getActivity(), mCallbacks.getListId(),
-						keyword.getText().toString());
-				((ArrayAdapter<String>) getListAdapter()).add(keyword.getText()
-						.toString());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				String value = keyword.getText().toString();
+				if(!value.equalsIgnoreCase("")){
+					if(!((KeywordAdapter) getListAdapter()).contains(value)){
+						DBHelper.insertKeyword(getActivity(), mCallbacks.getListId(),
+								keyword.getText().toString());
+						((ArrayAdapter<String>) getListAdapter()).add(keyword.getText()
+								.toString());
+						((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+						keyword.setText("");
+					}
+				}
 			}
 		});
 
@@ -86,7 +88,6 @@ public class DiffusionKeywordFragment extends ListFragment implements
 					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					add.performClick();
-					keyword.setText("");
 					return true;
 				}
 				return false;

@@ -10,8 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import fr.odai.smsdiffusion.FragementCallbacks;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.R.id;
-import fr.odai.smsdiffusion.R.layout;
 import fr.odai.smsdiffusion.db.DBHelper;
 import fr.odai.smsdiffusion.model.POJOList;
 
