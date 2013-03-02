@@ -24,9 +24,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/editName"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/ic_settings"
         android:drawablePadding="5dp"
-        android:layout_marginTop="5dp"
         android:padding="5dp"
         android:text="@string/diffusion_list_titleSetting" />
 
@@ -43,10 +43,12 @@
         android:id="@+id/switchEnable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textEnable"
         android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/textEnable"
+        android:layout_below="@+id/titleSetting"
+        layout="@layout/switch_check"
         android:padding="5dp"
-        layout="@layout/switch_check" />
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/textEnableHelp"
@@ -65,8 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
         android:layout_below="@+id/textEnableHelp"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/ic_infos"
         android:drawablePadding="5dp"
         android:padding="5dp"

@@ -19,8 +19,6 @@
             android:hint="@string/diffusion_contact_ui_hint"
             android:imeOptions="actionDone"
             android:singleLine="true" >
-
-            <requestFocus />
         </AutoCompleteTextView>
     </LinearLayout>
 
