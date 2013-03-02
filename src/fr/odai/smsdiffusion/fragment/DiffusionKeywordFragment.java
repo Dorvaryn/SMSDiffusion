@@ -53,15 +53,12 @@ public class DiffusionKeywordFragment extends ListFragment implements
 	};
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		if (savedInstanceState != null
-				&& savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-			setActivatedPosition(savedInstanceState
-					.getInt(STATE_ACTIVATED_POSITION));
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+			setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
 		}
-		View root = inflater.inflate(R.layout.fragment_diffusion_keyword,
-				container, false);
+		View root = inflater.inflate(R.layout.fragment_diffusion_keyword, container, false);
 
 		final EditText keyword = (EditText) root
 				.findViewById(R.id.text_keyword);
@@ -88,8 +85,7 @@ public class DiffusionKeywordFragment extends ListFragment implements
 
 		keyword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					add.performClick();
 					return true;
@@ -111,8 +107,7 @@ public class DiffusionKeywordFragment extends ListFragment implements
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		if (!(activity instanceof FragementCallbacks)) {
-			throw new IllegalStateException(
-					"Activity must implement fragment's callbacks.");
+			throw new IllegalStateException("Activity must implement fragment's callbacks.");
 		}
 		mCallbacks = (FragementCallbacks) activity;
 	}
@@ -141,8 +136,7 @@ public class DiffusionKeywordFragment extends ListFragment implements
 
 	public void setActivateOnItemClick(boolean activateOnItemClick) {
 		getListView().setChoiceMode(
-				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
-						: ListView.CHOICE_MODE_NONE);
+				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
 	}
 
 	public void setActivatedPosition(int position) {
