@@ -10,9 +10,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/diffusion_list_textName"
         android:singleLine="true"
+        android:text="@string/diffusion_list_textName"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
     <EditText
         android:id="@+id/editName"
@@ -20,9 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textName"
-        android:ems="10" >
-
-        <requestFocus />
+        android:ems="10"
+        android:nextFocusUp="@+id/editName" android:nextFocusLeft="@+id/editName" >
     </EditText>
 
     <View

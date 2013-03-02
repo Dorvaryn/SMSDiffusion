@@ -5,11 +5,11 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <ListView
+    <fr.odai.smsdiffusion.widget.SwipeableListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </ListView>
+    </fr.odai.smsdiffusion.widget.SwipeableListView>
 
     <TextView
         android:id="@android:id/empty"

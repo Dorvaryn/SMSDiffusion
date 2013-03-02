@@ -1,12 +1,12 @@
-package fr.odai.smsdiffusion.adapter;
+package fr.odai.smsdiffusion.model;
 
 public class POJOList {
 	
-	private int id;
+	private long id;
 	public String name;
 	public boolean enable;
 	
-	public POJOList(int id, String name, boolean enable) {
+	public POJOList(long id, String name, boolean enable) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -14,7 +14,7 @@ public class POJOList {
 	}
 	
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

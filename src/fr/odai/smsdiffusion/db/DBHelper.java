@@ -6,8 +6,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fr.odai.smsdiffusion.adapter.POJOContact;
-import fr.odai.smsdiffusion.adapter.POJOList;
+import fr.odai.smsdiffusion.model.POJOContact;
+import fr.odai.smsdiffusion.model.POJOList;
 
 public class DBHelper {
 
@@ -18,7 +18,7 @@ public class DBHelper {
 		return db.getReadableDatabase();
 	}
 
-	public static void insertContact(Context context, int list_id,
+	public static void insertContact(Context context, long list_id,
 			String phoneNumber) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
@@ -31,7 +31,7 @@ public class DBHelper {
 		}
 	}
 
-	public static void insertKeyword(Context context, int list_id, String value) {
+	public static void insertKeyword(Context context, long list_id, String value) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 
@@ -43,20 +43,22 @@ public class DBHelper {
 		}
 	}
 
-	public static void insertList(Context context, String name, boolean enable) {
+	public static long insertList(Context context, String name, boolean enable) {
+		long id = 0;
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 
 			ContentValues values = new ContentValues();
 			values.put("name", name);
 			values.put("enable", enable);
-			db.insert("diffusion_lists", null, values);
+			id = db.insert("diffusion_lists", null, values);
 			db.close();
 		}
+		return id;
 	}
 
 	public static ArrayList<POJOContact> getContacts(Context context,
-			int list_id) {
+			long list_id) {
 
 		ArrayList<POJOContact> contacts = new ArrayList<POJOContact>();
 		synchronized (DBHelper.sDataLock) {
@@ -81,7 +83,7 @@ public class DBHelper {
 	}
 	
 	public static ArrayList<String> getContactsPhoneOnly(Context context,
-			int list_id) {
+			long list_id) {
 
 		ArrayList<String> contacts = new ArrayList<String>();
 		synchronized (DBHelper.sDataLock) {
@@ -150,7 +152,7 @@ public class DBHelper {
 		return lists;
 	}
 	
-	public static POJOList getDiffusionList(Context context, int list_id) {
+	public static POJOList getDiffusionList(Context context, long list_id) {
 		POJOList entry;
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
@@ -168,7 +170,7 @@ public class DBHelper {
 		return entry;
 	}
 
-	public static ArrayList<String> getKeywords(Context context, int list_id) {
+	public static ArrayList<String> getKeywords(Context context, long list_id) {
 
 		ArrayList<String> keywords = new ArrayList<String>();
 		synchronized (DBHelper.sDataLock) {
@@ -201,7 +203,7 @@ public class DBHelper {
 		}
 	}
 
-	public static void removeContact(Context context, int list_id, String phoneNumber) {
+	public static void removeContact(Context context, long list_id, String phoneNumber) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 
@@ -210,7 +212,7 @@ public class DBHelper {
 		}
 	}
 	
-	public static void removeKeyword(Context context, int list_id, String value) {
+	public static void removeKeyword(Context context, long list_id, String value) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 
@@ -219,7 +221,7 @@ public class DBHelper {
 		}
 	}
 	
-	public static void removeList(Context context, int list_id) {
+	public static void removeList(Context context, long list_id) {
 		synchronized (DBHelper.sDataLock) {
 			SQLiteDatabase db = getDatabase(context);
 			db.delete("diffusion_lists", "_id = ?", new String[] { String.valueOf(list_id) });

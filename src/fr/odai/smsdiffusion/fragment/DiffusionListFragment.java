@@ -1,4 +1,4 @@
-package fr.odai.smsdiffusion;
+package fr.odai.smsdiffusion.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import fr.odai.smsdiffusion.adapter.POJOList;
+import fr.odai.smsdiffusion.FragementCallbacks;
+import fr.odai.smsdiffusion.R;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.model.POJOList;
 
 public class DiffusionListFragment extends Fragment {
 
@@ -20,8 +22,12 @@ public class DiffusionListFragment extends Fragment {
 
 	private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 		@Override
-		public int getListId() {
+		public long getListId() {
 			return 0;
+		}
+
+		@Override
+		public void updateTitle(String title) {
 		}
 	};
 
@@ -31,11 +37,8 @@ public class DiffusionListFragment extends Fragment {
 
 		View root = inflater.inflate(R.layout.fragment_diffusion_list,
 				container, false);
-		list = DBHelper.getDiffusionList(getActivity(), mCallbacks.getListId());
 		name = (EditText) root.findViewById(R.id.editName);
-		name.setText(list.name);
 		enabled = (CompoundButton) root.findViewById(R.id.switchEnable);
-		enabled.setChecked(list.enable);
 		return root;
 	}
 
@@ -67,7 +70,10 @@ public class DiffusionListFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		list.enable = enabled.isChecked();
-		list.name = name.getText().toString();
+		if(!name.getText().toString().equalsIgnoreCase("")){
+			list.name = name.getText().toString();
+			mCallbacks.updateTitle(list.name);
+		}
 		DBHelper.updateList(getActivity(), list);
 	}
 

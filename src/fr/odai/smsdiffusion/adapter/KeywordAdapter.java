@@ -9,16 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.odai.smsdiffusion.R;
-import fr.odai.smsdiffusion.model.POJOList;
 import fr.odai.smsdiffusion.widget.HiddenQuickActionSetup;
 import fr.odai.smsdiffusion.widget.SwipeableHiddenView;
 
-public class ListAdapter extends ArrayAdapter<POJOList> {
+public class KeywordAdapter extends ArrayAdapter<String> {
+	
+	private ArrayList<String> keywords;
 	private HiddenQuickActionSetup mQuickActionSetup;
 	
-	public ListAdapter(Context context, int textViewResourceId, ArrayList<POJOList> lists, HiddenQuickActionSetup setup) {
-		super(context, textViewResourceId, lists);
-		mQuickActionSetup = setup;
+	public KeywordAdapter(Context context, int textViewResourceId, ArrayList<String> keywords, HiddenQuickActionSetup setup) {
+		super(context, textViewResourceId, keywords);
+		this.mQuickActionSetup = setup;
+		this.keywords = keywords;
 	}
 
 	@Override
@@ -33,20 +35,23 @@ public class ListAdapter extends ArrayAdapter<POJOList> {
 			((SwipeableHiddenView) convertView).setHiddenViewSetup(mQuickActionSetup);
 
 			holder = new ViewHolder();
-			holder.name = (TextView) convertView.findViewById(R.id.item_list_name);
+			holder.value = (TextView) convertView.findViewById(R.id.item_list_name);
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		POJOList list = getItem(position);
-		holder.name.setText(list.name);
-		holder.name.setEnabled(list.enable);
+		String keyword = getItem(position);
+		holder.value.setText(keyword);
 
 		return convertView;
 	}
 
 	private class ViewHolder {
-		public TextView name;
+		public TextView value;
+	}
+	
+	public boolean contains(String keyword){
+		return keywords.contains(keyword);
 	}
 }

@@ -13,8 +13,8 @@ import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import fr.odai.smsdiffusion.adapter.POJOList;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.model.POJOList;
 
 public class SMSProcess extends BroadcastReceiver {
 
