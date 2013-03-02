@@ -43,7 +43,7 @@ public class DiffusionKeywordFragment extends ListFragment implements
 
 	private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 		@Override
-		public int getListId() {
+		public long getListId() {
 			return 0;
 		}
 	};

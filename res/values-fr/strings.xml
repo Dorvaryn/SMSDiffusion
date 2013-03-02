@@ -7,8 +7,7 @@
     <string name="home_menu_add_dialog">Entrez le nom de votre nouvelle liste de diffusion</string>
     <string name="home_remove_message">Supprimer cette liste ?</string>
     <string name="home_remove_confirm">OK</string>
-    <string name="dialog_button_positive">OK</string>
-    <string name="dialog_button_negative">Annuler</string>
+    <string name="home_default_list_name">Ma liste</string>
 
     <!-- Diffusion keyword fragment -->
     <string name="diffusion_keyword_title">Mots Clefs</string>

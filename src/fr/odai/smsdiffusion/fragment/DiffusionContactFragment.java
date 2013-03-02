@@ -47,7 +47,7 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 		
 		private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 			@Override
-			public int getListId() {
+			public long getListId() {
 				return 0;
 			}
 		};
@@ -104,9 +104,9 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 			//Purge the search adapter from all contacts already in this list
 			//TODO: remove this by implementing a filterable search in database
 			ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
-			for (Iterator iterator = allContacts.iterator(); iterator.hasNext();) {
+			for (Iterator<POJOContact> iterator = allContacts.iterator(); iterator.hasNext();) {
 				POJOContact contact = (POJOContact) iterator.next();
-				for (Iterator iterator2 = contacts.iterator(); iterator2
+				for (Iterator<POJOContact> iterator2 = contacts.iterator(); iterator2
 						.hasNext();) {
 					POJOContact exists = (POJOContact) iterator2.next();
 					if(exists.phone.equalsIgnoreCase(contact.phone)){

@@ -9,8 +9,7 @@
     <string name="home_menu_add_dialog">Enter the name of your new diffusion list</string>
     <string name="home_remove_message">Delete this list ?</string>
     <string name="home_remove_confirm">OK</string>
-    <string name="dialog_button_positive">OK</string>
-    <string name="dialog_button_negative">Cancel</string>
+    <string name="home_default_list_name">My list</string>
 
     <!-- Diffusion keyword fragment -->
     <string name="diffusion_keyword_title">Keywords</string>

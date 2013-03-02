@@ -1,8 +1,6 @@
 package fr.odai.smsdiffusion;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import fr.odai.smsdiffusion.adapter.ListAdapter;
 import fr.odai.smsdiffusion.db.DBHelper;
@@ -31,6 +28,7 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		setTitle(R.string.app_name);
 		setupQuickAction();
 	}
 
@@ -62,43 +60,10 @@ public class HomeActivity extends ListActivity implements OnQuickActionListener 
 		// Click on title in actionbar
 		switch (item.getItemId()) {
 		case R.id.menu_add:
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-			alert.setTitle(getResources().getString(R.string.home_menu_add));
-			alert.setMessage(getResources().getString(
-					R.string.home_menu_add_dialog));
-
-			// Set an EditText view to get user input
-			final EditText input = new EditText(this);
-			input.setSingleLine();
-			alert.setView(input);
-
-			alert.setPositiveButton(
-					getResources().getString(R.string.dialog_button_positive),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							dialog.cancel();
-							String value = input.getText().toString();
-							DBHelper.insertList(getBaseContext(), value, true);
-							setListAdapter(new ListAdapter(
-									getBaseContext(),
-									R.layout.item_list,
-									DBHelper.getDiffusionLists(getBaseContext()),
-									mQuickActionSetup));
-						}
-					});
-
-			alert.setNegativeButton(
-					getResources().getString(R.string.dialog_button_negative),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							dialog.cancel();
-						}
-					});
-
-			alert.show();
+			long id = DBHelper.insertList(getBaseContext(), getResources().getString(R.string.home_default_list_name), true);
+			Intent it = new Intent(this, DiffusionTabActivity.class);
+			it.putExtra("list_id", id);
+			startActivity(it);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -22,7 +22,7 @@ public class DiffusionListFragment extends Fragment {
 
 	private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 		@Override
-		public int getListId() {
+		public long getListId() {
 			return 0;
 		}
 	};
@@ -33,11 +33,8 @@ public class DiffusionListFragment extends Fragment {
 
 		View root = inflater.inflate(R.layout.fragment_diffusion_list,
 				container, false);
-		list = DBHelper.getDiffusionList(getActivity(), mCallbacks.getListId());
 		name = (EditText) root.findViewById(R.id.editName);
-		name.setText(list.name);
 		enabled = (CompoundButton) root.findViewById(R.id.switchEnable);
-		enabled.setChecked(list.enable);
 		return root;
 	}
 
