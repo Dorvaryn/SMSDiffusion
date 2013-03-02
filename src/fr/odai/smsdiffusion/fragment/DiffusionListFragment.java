@@ -3,6 +3,8 @@ package fr.odai.smsdiffusion.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,27 @@ public class DiffusionListFragment extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_diffusion_list,
 				container, false);
 		name = (EditText) root.findViewById(R.id.editName);
+		name.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				mCallbacks.updateTitle(s.toString());
+			}
+		});
 		enabled = (CompoundButton) root.findViewById(R.id.switchEnable);
 		return root;
 	}
@@ -70,10 +93,10 @@ public class DiffusionListFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		list.enable = enabled.isChecked();
-		if(!name.getText().toString().equalsIgnoreCase("")){
+		if (!name.getText().toString().equalsIgnoreCase("")) {
 			list.name = name.getText().toString();
-			mCallbacks.updateTitle(list.name);
 		}
+		mCallbacks.updateTitle(list.name);
 		DBHelper.updateList(getActivity(), list);
 	}
 
