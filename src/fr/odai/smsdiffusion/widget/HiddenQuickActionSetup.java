@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -498,6 +499,12 @@ public class HiddenQuickActionSetup extends HiddenViewSetup {
 		info.description = confirmationMessageResId;
 		iv.setTag(info);
 		mLinearLayout.addView(iv);
+		
+		View ruler = new View(mLinearLayout.getContext()); 
+		ruler.setBackgroundColor(mLinearLayout.getContext().getResources().getColor(android.R.color.primary_text_dark));
+		LayoutParams paramsV = new LayoutParams(3 , ViewGroup.LayoutParams.MATCH_PARENT);
+		paramsV.setMargins(0, 10, 0, 10);
+		mLinearLayout.addView(ruler,paramsV);
 		
 		TextView iv2 = new TextView(mLinearLayout.getContext());
 
