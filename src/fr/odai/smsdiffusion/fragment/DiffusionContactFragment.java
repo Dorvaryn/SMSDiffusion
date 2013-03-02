@@ -35,6 +35,7 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 
 		private FragementCallbacks mCallbacks = sDummyCallbacks;
 		private int mActivatedPosition = ListView.INVALID_POSITION;
+		private ContactAdapter autoAdapter;
 
 		private static final class QuickAction {
 			public static final int CONFIRM = 1;
@@ -106,7 +107,7 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 				}
 			}
 			
-			final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
+			autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
 					allContacts, mQuickActionSetup);
 			
 
@@ -217,6 +218,7 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
         	((ArrayAdapter<POJOContact>) getListAdapter()).remove(toDelete);
         	DBHelper.removeContact(getActivity(), mCallbacks.getListId(), toDelete.phone); 
 			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			autoAdapter.add(toDelete);
 			break;
 
 		default:
