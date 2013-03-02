@@ -712,7 +712,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 					calculateAnimationDirectionChange(mStartDirection);
 					float moved = Math.abs(mOffset) - Math.abs(mStartOffset);
 					float stop = 1f * mData.stopOffset / getWidth();
-					
 					animate(Math.abs(mStartOffset) < 0.5f ? moved > stop : moved > -stop);
 				}
 			}
@@ -881,7 +880,7 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 			
 			int overlayOffset = Math.round(offset);
 			overlayOffset = mOffset >= 0 ? overlayOffset : -overlayOffset;
-			
+
 			mOverlayView.offsetLeftAndRight(-lastOverlayOffset);
 			mOverlayView.offsetLeftAndRight(overlayOffset);
 			drawChild(canvas, mOverlayView, drawingTime);

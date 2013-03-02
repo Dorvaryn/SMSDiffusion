@@ -3,52 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/item_contact_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical" >
+            android:layout_alignParentLeft="true"
+            android:text="Damien Klebinsky"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/item_contact_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Damien Klebinsky"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/item_contact_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/item_contact_name"
+            android:text="+336 67 00 34 70"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/secondary_text_dark" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/item_contact_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+336 67 00 34 70"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/secondary_text_dark" />
-
-                <TextView
-                    android:id="@+id/item_contact_phone_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="HOME"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/secondary_text_dark" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/item_contact_phone_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/item_contact_badge"
+            android:layout_alignBaseline="@+id/item_contact_phone"
+            android:padding="10dp"
+            android:gravity="right"
+            android:text="HOME"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/secondary_text_dark" />
 
         <QuickContactBadge
             android:id="@+id/item_contact_badge"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
-    </LinearLayout>
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
 </fr.odai.smsdiffusion.widget.SwipeableHiddenView>
