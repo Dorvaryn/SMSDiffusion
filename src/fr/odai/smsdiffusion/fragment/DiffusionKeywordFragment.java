@@ -159,8 +159,9 @@ public class DiffusionKeywordFragment extends ListFragment implements
 		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
 		mQuickActionSetup.setImageSize(imageSize, imageSize);
 		mQuickActionSetup.setAnimationSpeed(700);
-		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 30));
-		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 80));
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 5));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 20));
+		mQuickActionSetup.setStickyStart(false);
 		mQuickActionSetup.setSwipeOnLongClick(true);
 
 		mQuickActionSetup.setConfirmationMessage(QuickAction.CONFIRM,

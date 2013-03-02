@@ -41,7 +41,7 @@ import fr.odai.smsdiffusion.widget.SwipeableListItem.SwipeEvent;
  * 
  * @author Viktor Reiser &lt;<a href="mailto:viktorreiser@gmx.de">viktorreiser@gmx.de</a>&gt;
  */
-public class SwipeableListView extends ListView implements OnScrollListener,
+public class SwipeableListView extends ListView implements OnScrollListener, View.OnTouchListener, 
 		OnCreateContextMenuListener {
 	
 	// PRIVATE ====================================================================================
@@ -112,16 +112,19 @@ public class SwipeableListView extends ListView implements OnScrollListener,
 	public SwipeableListView(Context context) {
 		super(context);
 		initialize();
+		setOnTouchListener(this);
 	}
 	
 	public SwipeableListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize();
+		setOnTouchListener(this);
 	}
 	
 	public SwipeableListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initialize();
+		setOnTouchListener(this);
 	}
 	
 	
@@ -291,7 +294,7 @@ public class SwipeableListView extends ListView implements OnScrollListener,
 	 * <i>Overridden for internal use!</i>
 	 */
 	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
+	public boolean onTouch(View v, MotionEvent ev) {
 		return handleTouchEvent(ev, false);
 	}
 	
