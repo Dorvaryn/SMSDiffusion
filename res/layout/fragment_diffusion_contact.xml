@@ -21,13 +21,6 @@
             android:imeOptions="actionDone">
         </AutoCompleteTextView>
 
-        <ImageButton
-            android:id="@+id/button_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/diffusion_contact_ui_contentdescription"
-            android:src="@drawable/ic_add" />
-
     </LinearLayout>
 
     <fr.odai.smsdiffusion.widget.SwipeableListView

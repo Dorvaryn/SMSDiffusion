@@ -10,7 +10,6 @@ import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -18,7 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.odai.smsdiffusion.FragementCallbacks;
@@ -43,7 +41,6 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 
 		private HiddenQuickActionSetup mQuickActionSetup;
 		private AutoCompleteTextView phoneNumber;
-		private ImageButton add;
 		
 		private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 			@Override
@@ -64,20 +61,9 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 
 			setupQuickAction();
 			phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
-			add = (ImageButton) root.findViewById(R.id.button_add);
 			
 			
-			phoneNumber.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
-				@Override
-				public boolean onEditorAction(TextView v, int actionId,
-						KeyEvent event) {
-					if (actionId == EditorInfo.IME_ACTION_DONE) {
-						add.performClick();
-						return true;
-					}
-					return false;
-				};
-			});
+			
 			return root;
 		}
 
@@ -137,18 +123,20 @@ public class DiffusionContactFragment extends ListFragment implements OnQuickAct
 				}
 			});	
 			
-			add.setOnClickListener(new OnClickListener() {
-				
+			phoneNumber.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
 				@SuppressWarnings("unchecked")
 				@Override
-				public void onClick(View v) {
-					if(!phoneNumber.getText().toString().equalsIgnoreCase("")){
+				public boolean onEditorAction(TextView v, int actionId,
+						KeyEvent event) {
+					if (actionId == EditorInfo.IME_ACTION_DONE) {
 						POJOContact newContact = autoAdapter.getItem(0);
 						DBHelper.insertContact(getActivity(), mCallbacks.getListId(), newContact.phone);
 						((ArrayAdapter<POJOContact>) getListAdapter()).add(newContact);
 						phoneNumber.setText("");
+						return true;
 					}
-				}
+					return false;
+				};
 			});
 		}
 
