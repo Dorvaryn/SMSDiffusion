@@ -51,6 +51,7 @@ public class DBHelper {
 			ContentValues values = new ContentValues();
 			values.put("name", name);
 			values.put("enable", enable);
+			values.put("total_message_sent", 0);
 			id = db.insert("diffusion_lists", null, values);
 			db.close();
 		}
@@ -111,14 +112,16 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
-					"_id", "name", "enable" }, null, null, null, null,
+					"_id", "name", "enable", "total_message_sent", "last_sent_date", "last_message" }, null, null, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
 				boolean enable = cursor.getInt(2) == 1;
-				POJOList entry = new POJOList(cursor.getInt(0),
-						cursor.getString(1), enable);
+				POJOList entry = new POJOList(cursor.getLong(0),
+						cursor.getString(1), enable, cursor.getLong(3));
+				entry.lastSentDate = cursor.getLong(4);
+				entry.lastMessage = cursor.getString(5);
 				lists.add(entry);
 				cursor.moveToNext();
 			}
@@ -135,14 +138,16 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
-					"_id", "name", "enable" }, "enable = ?", new String[]{String.valueOf(1)}, null, null,
+					"_id", "name", "enable", "total_message_sent", "last_sent_date", "last_message" }, "enable = ?", new String[]{String.valueOf(1)}, null, null,
 					"_id DESC", null);
 
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
 				boolean enable = cursor.getInt(2) == 1;
-				POJOList entry = new POJOList(cursor.getInt(0),
-						cursor.getString(1), enable);
+				POJOList entry = new POJOList(cursor.getLong(0),
+						cursor.getString(1), enable, cursor.getLong(3));
+				entry.lastSentDate = cursor.getLong(4);
+				entry.lastMessage = cursor.getString(5);
 				lists.add(entry);
 				cursor.moveToNext();
 			}
@@ -158,12 +163,14 @@ public class DBHelper {
 			SQLiteDatabase db = getDatabase(context);
 
 			Cursor cursor = db.query(true, "diffusion_lists", new String[] {
-					"_id", "name", "enable" }, "_id = ?", new String[]{String.valueOf(list_id)}, null, null,
+					"_id", "name", "enable", "total_message_sent", "last_sent_date", "last_message" }, "_id = ?", new String[]{String.valueOf(list_id)}, null, null,
 					"_id DESC", null);
 			cursor.moveToFirst();
 			boolean enable = cursor.getInt(2) == 1;
-			entry = new POJOList(cursor.getInt(0),
-					cursor.getString(1), enable);
+			entry = new POJOList(cursor.getLong(0),
+					cursor.getString(1), enable, cursor.getLong(3));
+			entry.lastSentDate = cursor.getLong(4);
+			entry.lastMessage = cursor.getString(5);
 			cursor.close();
 			db.close();
 		}
@@ -198,6 +205,9 @@ public class DBHelper {
 			ContentValues values = new ContentValues();
 			values.put("name", list.name);
 			values.put("enable", list.enable);
+			values.put("total_message_sent", list.totalMessageSent);
+			values.put("last_sent_date", list.lastSentDate);
+			values.put("last_message", list.lastMessage);
 			db.update("diffusion_lists", values, "_id = ?", new String[]{String.valueOf(list.getId())});
 			db.close();
 		}

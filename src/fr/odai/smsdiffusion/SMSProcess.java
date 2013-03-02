@@ -1,15 +1,14 @@
 package fr.odai.smsdiffusion;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -37,31 +36,38 @@ public class SMSProcess extends BroadcastReceiver {
 
 					String body = sms.getMessageBody().toString();
 					String address = sms.getOriginatingAddress();
-					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-					String lastSMSForwarded = prefs.getString("lastSMS", "");
-					if(!body.equalsIgnoreCase(lastSMSForwarded)){
-						HashSet<String> numbersToSend = new HashSet<String>();
-						ArrayList<POJOList> lists = DBHelper.getEnabledDiffusionLists(context);
-						for(POJOList list : lists){
-							ArrayList<String> keywords = DBHelper.getKeywords(context, list.getId());
+
+					HashSet<String> numbersToSend = new HashSet<String>();
+					ArrayList<POJOList> lists = DBHelper
+							.getEnabledDiffusionLists(context);
+					for (POJOList list : lists) {
+						ArrayList<String> keywords = DBHelper.getKeywords(
+								context, list.getId());
+						if(list.lastMessage == null || !list.lastMessage.equalsIgnoreCase(body)){
 							boolean sending = false;
 							Iterator<String> it = keywords.iterator();
 							while (it.hasNext() && !sending) {
 								String keyword = (String) it.next();
-								if(body.contains(keyword)){
-									ArrayList<String> contactsPhone = DBHelper.getContactsPhoneOnly(context, list.getId());
+								if (body.toLowerCase().contains(keyword.toLowerCase())) {
+									ArrayList<String> contactsPhone = DBHelper
+											.getContactsPhoneOnly(context,
+													list.getId());
 									numbersToSend.addAll(contactsPhone);
 									sending = true;
+									list.lastMessage = body;
+									list.lastSentDate = new Date().getTime();
+									list.totalMessageSent += 1;
+									DBHelper.updateList(context, list);
 								}
 							}
 						}
-						if(!numbersToSend.isEmpty()){
-							prefs.edit().putString("lastSMS", body).commit();
-							for(String number : numbersToSend){
-								if(!PhoneNumberUtils.compare(address,number)){
-									SmsManager smsManager = SmsManager.getDefault();
-									smsManager.sendTextMessage(number, null, body, null, null);
-								}
+					}
+					if (!numbersToSend.isEmpty()) {
+						for (String number : numbersToSend) {
+							if (!PhoneNumberUtils.compare(address, number)) {
+								SmsManager smsManager = SmsManager.getDefault();
+								smsManager.sendTextMessage(number, null, body,
+										null, null);
 							}
 						}
 					}

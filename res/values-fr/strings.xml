@@ -27,6 +27,11 @@
     <!-- Diffusion list fragment -->
     <string name="diffusion_list_title">Paramètres de la liste</string>
     <string name="diffusion_list_textHint">Nom de cette liste</string>
-    <string name="diffusion_list_textEnable">Activée</string>
+    <string name="diffusion_list_titleInfos">A Propos de cette liste</string>
+	<string name="diffusion_list_textInfos">Ajoutez des mots-clefs depuis l\'onglet "mots-clefs". Tout message entrant contenant un de ces mots-clefs sera automatiquement transmis aux contacts sélectionnez dans l\'onglet "contacts".</string>
+    <string name="diffusion_list_textEnable">Activer cette liste</string>
+    <string name="diffusion_list_textEnableHelp">Défini si les SMS contenant les mots clefs de cette liste seront diffusés</string>
+    <string name="diffusion_list_textInfos_full">Cette liste à transféré %1$d messages à %2$d contacts. \nDernier message envoyé le %3$s: \n"%4$s"</string>
+    <string name="diffusion_list_textInfos_semi">Cette liste à transféré %1$d messages à %2$d contacts.</string>
     
 </resources>

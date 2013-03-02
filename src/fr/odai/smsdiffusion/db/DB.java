@@ -17,7 +17,7 @@ public class DB extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL("CREATE TABLE diffusion_lists ( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, enable INTEGER NOT NULL)");
+		database.execSQL("CREATE TABLE diffusion_lists ( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, enable INTEGER NOT NULL, total_message_sent INTEGER NOT NULL, last_sent_date INTEGER, last_message TEXT)");
 		database.execSQL("CREATE TABLE contacts ( _id INTEGER PRIMARY KEY AUTOINCREMENT, number TEXT NOT NULL, list_id INTEGER NOT NULL, FOREIGN KEY(list_id) REFERENCES diffusion_lists(_id))");
 		database.execSQL("CREATE TABLE keywords ( _id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT NOT NULL, list_id INTEGER NOT NULL, FOREIGN KEY(list_id) REFERENCES diffusion_lists(_id))");
 	}

@@ -34,7 +34,6 @@ public class ListAdapter extends ArrayAdapter<POJOList> {
 
 			holder = new ViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.item_list_name);
-
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -42,7 +41,6 @@ public class ListAdapter extends ArrayAdapter<POJOList> {
 		POJOList list = getItem(position);
 		holder.name.setText(list.name);
 		holder.name.setEnabled(list.enable);
-
 		return convertView;
 	}
 

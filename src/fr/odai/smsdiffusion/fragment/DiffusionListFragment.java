@@ -1,15 +1,18 @@
 package fr.odai.smsdiffusion.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import fr.odai.smsdiffusion.FragementCallbacks;
 import fr.odai.smsdiffusion.R;
 import fr.odai.smsdiffusion.db.DBHelper;
@@ -18,6 +21,7 @@ import fr.odai.smsdiffusion.model.POJOList;
 public class DiffusionListFragment extends Fragment {
 
 	private EditText name;
+	private TextView infos;
 	private POJOList list;
 	private CompoundButton enabled;
 	private FragementCallbacks mCallbacks = sDummyCallbacks;
@@ -40,6 +44,7 @@ public class DiffusionListFragment extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_diffusion_list,
 				container, false);
 		name = (EditText) root.findViewById(R.id.editName);
+		infos = (TextView) root.findViewById(R.id.infos);
 		name.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -84,9 +89,25 @@ public class DiffusionListFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		list = DBHelper.getDiffusionList(getActivity(), mCallbacks.getListId());
+		Context ctx = getActivity();
+		list = DBHelper.getDiffusionList(ctx, mCallbacks.getListId());
 		name.setText(list.name);
-		enabled.setChecked(list.enable);
+		enabled.setChecked(list.enable);		
+		if(list.isInit(ctx)){
+			if(list.lastSentDate != 0){
+				String date = DateUtils.formatDateTime(ctx, list.lastSentDate, 0);
+				String format = ctx.getResources().getString(R.string.diffusion_list_textInfos_full);
+				String infosN = String.format(format, list.totalMessageSent, list.getNbContacts(ctx), date, list.lastMessage);
+				infos.setText(infosN);
+			}else {
+				String format = ctx.getResources().getString(R.string.diffusion_list_textInfos_semi);
+				String infosN = String.format(format, list.totalMessageSent, list.getNbContacts(ctx));
+				infos.setText(infosN);
+			}
+		}else {
+			infos.setText(R.string.diffusion_list_textInfos);
+		}
+
 	}
 
 	@Override
