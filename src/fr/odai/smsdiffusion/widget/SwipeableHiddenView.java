@@ -704,8 +704,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 		
 		case STOP:
 			if (mStarted) {
-				
-				
 				if (isHiddenViewCovered()) {
 					animate(false);
 				} else if (isHiddenViewVisible()) {
