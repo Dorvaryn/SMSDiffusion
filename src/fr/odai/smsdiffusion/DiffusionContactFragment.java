@@ -3,6 +3,7 @@ package fr.odai.smsdiffusion;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
@@ -19,18 +20,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import fr.odai.smsdiffusion.HiddenQuickActionSetup.OnQuickActionListener;
 import fr.odai.smsdiffusion.adapter.ContactAdapter;
 import fr.odai.smsdiffusion.adapter.POJOContact;
-import fr.odai.smsdiffusion.adapter.SwipeDismissListViewTouchListener;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.utils.AndroidUtils;
 
-public class DiffusionContactFragment extends ListFragment {
+public class DiffusionContactFragment extends ListFragment implements OnQuickActionListener{
 
 		private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 		private FragementCallbacks mCallbacks = sDummyCallbacks;
 		private int mActivatedPosition = ListView.INVALID_POSITION;
 
+		private static final class QuickAction {
+			public static final int CONFIRM = 1;
+		}
+
+		private HiddenQuickActionSetup mQuickActionSetup;
 		
 		private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 			@Override
@@ -44,12 +51,13 @@ public class DiffusionContactFragment extends ListFragment {
 			if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
 				setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
 			}View root = inflater.inflate(R.layout.fragment_diffusion_contact, container, false);
-			
+
+			setupQuickAction();
 			// Autocomplete adapter
 			final AutoCompleteTextView phoneNumber = (AutoCompleteTextView) root.findViewById(R.id.text_contact);
 			ArrayList<POJOContact> allContacts = POJOContact.getAllContacts(getActivity());
 			final ContactAdapter autoAdapter = new ContactAdapter(getActivity(), R.layout.item_contact,
-					allContacts);
+					allContacts, mQuickActionSetup);
 			
 
 			phoneNumber.setAdapter(autoAdapter);
@@ -91,7 +99,6 @@ public class DiffusionContactFragment extends ListFragment {
 					return false;
 				};
 			});
-			
 			return root;
 		}
 
@@ -116,7 +123,7 @@ public class DiffusionContactFragment extends ListFragment {
 			super.onResume();
 			ArrayList<POJOContact> contacts = DBHelper.getContacts(getActivity(), mCallbacks.getListId());
 			// List adapter
-			final ContactAdapter adapter = new ContactAdapter(getActivity(), R.layout.item_contact, contacts);
+			final ContactAdapter adapter = new ContactAdapter(getActivity(), R.layout.item_contact, contacts, mQuickActionSetup);
 			setListAdapter(adapter);
 		}
 
@@ -148,31 +155,41 @@ public class DiffusionContactFragment extends ListFragment {
 
 			mActivatedPosition = position;
 		}
+	
+	private void setupQuickAction() {
+		Context ctx = getActivity();
+		mQuickActionSetup = new HiddenQuickActionSetup(ctx);
+		mQuickActionSetup.setOnQuickActionListener(this);
+
+		int imageSize = AndroidUtils.dipToPixel(ctx, 40);
+
+		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
+		mQuickActionSetup.setImageSize(imageSize, imageSize);
+		mQuickActionSetup.setAnimationSpeed(700);
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 30));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 80));
+		mQuickActionSetup.setSwipeOnLongClick(true);
+
+		mQuickActionSetup.setConfirmationMessage(QuickAction.CONFIRM,
+				R.string.diffusion_contact_remove_confirm, R.drawable.ic_confirm,
+				R.string.diffusion_contact_remove_message);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		ListView listView = getListView();
-		SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                		listView,
-                        new SwipeDismissListViewTouchListener.OnDismissCallback() {
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
-                                	POJOContact toDelete = (POJOContact) getListAdapter().getItem(position);
-                                	((ArrayAdapter<POJOContact>) getListAdapter()).remove(toDelete);
-                                	DBHelper.removeContact(getActivity(), mCallbacks.getListId(), toDelete.phone);                                	
-                                }
-                                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                            }
-                        });
-        listView.setOnTouchListener(touchListener);
-        // Setting this scroll listener is required to ensure that during ListView scrolling,
-        // we don't look for swipes.
-        listView.setOnScrollListener(touchListener.makeScrollListener());
+	public void onQuickAction(AdapterView<?> parent, View view, int position,
+			int quickActionId) {
+		switch (quickActionId) {
+		case QuickAction.CONFIRM:
+			POJOContact toDelete = (POJOContact) getListAdapter().getItem(position);
+        	((ArrayAdapter<POJOContact>) getListAdapter()).remove(toDelete);
+        	DBHelper.removeContact(getActivity(), mCallbacks.getListId(), toDelete.phone); 
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			break;
+
+		default:
+			break;
+		}
 	}
-	
 	
 }

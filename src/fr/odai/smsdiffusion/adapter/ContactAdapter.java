@@ -2,8 +2,6 @@ package fr.odai.smsdiffusion.adapter;
 
 import java.util.ArrayList;
 
-import fr.odai.smsdiffusion.R;
-
 import android.content.Context;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -13,43 +11,60 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
+import fr.odai.smsdiffusion.HiddenQuickActionSetup;
+import fr.odai.smsdiffusion.R;
+import fr.odai.smsdiffusion.SwipeableHiddenView;
 
 public class ContactAdapter extends ArrayAdapter<POJOContact> {
 
 	public ArrayList<POJOContact> contacts;
-
-	public ContactAdapter(Context context, int textViewResourceId, ArrayList<POJOContact> contacts) {
+	private HiddenQuickActionSetup mQuickActionSetup;
+	
+	public ContactAdapter(Context context, int textViewResourceId, ArrayList<POJOContact> contacts, HiddenQuickActionSetup setup) {
 		super(context, textViewResourceId, contacts);
 		this.contacts = contacts;
+		this.mQuickActionSetup = setup;
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+
 		if (convertView == null) {
 			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
-			convertView = vi.inflate(R.layout.item_contact, null);
+			convertView = (SwipeableHiddenView) vi.inflate(
+					R.layout.item_contact, null);
+			((SwipeableHiddenView) convertView).setHiddenViewSetup(mQuickActionSetup);
+
+			holder = new ViewHolder();
+			holder.name = (TextView) convertView.findViewById(R.id.item_contact_name);
+			holder.phone = (TextView) convertView.findViewById(R.id.item_contact_phone);
+			holder.phoneType = (TextView) convertView.findViewById(R.id.item_contact_phone_type);
+			holder.badge = (QuickContactBadge) convertView.findViewById(R.id.item_contact_badge);
+					
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
-
 		POJOContact contact = getItem(position);
-		TextView name = (TextView) convertView.findViewById(R.id.item_contact_name);
-		name.setText(contact.name);
-
-		TextView phone = (TextView) convertView.findViewById(R.id.item_contact_phone);
-		phone.setText(contact.phone);
-		
-		TextView phoneType = (TextView) convertView.findViewById(R.id.item_contact_phone_type);
-		phoneType.setText(contact.phoneType);
-
-		QuickContactBadge badge = (QuickContactBadge) convertView.findViewById(R.id.item_contact_badge);
+		holder.name.setText(contact.name);
+		holder.phone.setText(contact.phone);
+		holder.phoneType.setText(contact.phoneType);
 		if (contact.icon != null)
-			badge.setImageURI(contact.icon);
+			holder.badge.setImageURI(contact.icon);
 		else
-			badge.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_contact));
-		badge.assignContactUri(Uri.withAppendedPath(
+			holder.badge.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_contact));
+		holder.badge.assignContactUri(Uri.withAppendedPath(
 				ContactsContract.Contacts.CONTENT_LOOKUP_URI,
 				String.valueOf(contact.lookupKey)));
-		
 		return convertView;
+	}
+
+	private class ViewHolder {
+		public TextView name;
+		public TextView phone;
+		public TextView phoneType;
+		public QuickContactBadge badge;
 	}
 }

@@ -12,10 +12,10 @@ import fr.odai.smsdiffusion.HiddenQuickActionSetup;
 import fr.odai.smsdiffusion.R;
 import fr.odai.smsdiffusion.SwipeableHiddenView;
 
-public class ListAdapter extends ArrayAdapter<POJOList> {
+public class KeywordAdapter extends ArrayAdapter<String> {
 	private HiddenQuickActionSetup mQuickActionSetup;
 	
-	public ListAdapter(Context context, int textViewResourceId, ArrayList<POJOList> lists, HiddenQuickActionSetup setup) {
+	public KeywordAdapter(Context context, int textViewResourceId, ArrayList<String> lists, HiddenQuickActionSetup setup) {
 		super(context, textViewResourceId, lists);
 		mQuickActionSetup = setup;
 	}
@@ -32,20 +32,19 @@ public class ListAdapter extends ArrayAdapter<POJOList> {
 			((SwipeableHiddenView) convertView).setHiddenViewSetup(mQuickActionSetup);
 
 			holder = new ViewHolder();
-			holder.name = (TextView) convertView.findViewById(R.id.item_list_name);
+			holder.value = (TextView) convertView.findViewById(R.id.item_list_name);
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		POJOList list = getItem(position);
-		holder.name.setText(list.name);
-		holder.name.setEnabled(list.enable);
+		String keyword = getItem(position);
+		holder.value.setText(keyword);
 
 		return convertView;
 	}
 
 	private class ViewHolder {
-		public TextView name;
+		public TextView value;
 	}
 }

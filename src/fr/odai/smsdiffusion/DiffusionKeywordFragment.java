@@ -3,6 +3,7 @@ package fr.odai.smsdiffusion;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
@@ -11,21 +12,31 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import fr.odai.smsdiffusion.adapter.SwipeDismissListViewTouchListener;
+import fr.odai.smsdiffusion.HiddenQuickActionSetup.OnQuickActionListener;
+import fr.odai.smsdiffusion.adapter.KeywordAdapter;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.utils.AndroidUtils;
 
-public class DiffusionKeywordFragment extends ListFragment {
+public class DiffusionKeywordFragment extends ListFragment implements
+		OnQuickActionListener {
 
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 	private FragementCallbacks mCallbacks = sDummyCallbacks;
 	private int mActivatedPosition = ListView.INVALID_POSITION;
+
+	private static final class QuickAction {
+		public static final int CONFIRM = 1;
+	}
+
+	private HiddenQuickActionSetup mQuickActionSetup;
 
 	private static FragementCallbacks sDummyCallbacks = new FragementCallbacks() {
 		@Override
@@ -47,7 +58,8 @@ public class DiffusionKeywordFragment extends ListFragment {
 
 		final EditText keyword = (EditText) root
 				.findViewById(R.id.text_keyword);
-		final ImageButton add = (ImageButton) root.findViewById(R.id.button_add);
+		final ImageButton add = (ImageButton) root
+				.findViewById(R.id.button_add);
 		add.setOnClickListener(new OnClickListener() {
 
 			@SuppressWarnings("unchecked")
@@ -60,7 +72,7 @@ public class DiffusionKeywordFragment extends ListFragment {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 			}
 		});
-		
+
 		keyword.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
@@ -73,7 +85,7 @@ public class DiffusionKeywordFragment extends ListFragment {
 				return false;
 			};
 		});
-
+		setupQuickAction();
 		return root;
 	}
 
@@ -96,10 +108,9 @@ public class DiffusionKeywordFragment extends ListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		ArrayList<String> contacts = DBHelper.getKeywords(getActivity(),
+		ArrayList<String> keywords = DBHelper.getKeywords(getActivity(),
 				mCallbacks.getListId());
-		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, contacts));
+		setListAdapter(new KeywordAdapter(getActivity(), R.layout.item_list, keywords, mQuickActionSetup));
 	}
 
 	@Override
@@ -132,33 +143,41 @@ public class DiffusionKeywordFragment extends ListFragment {
 		mActivatedPosition = position;
 	}
 
+	private void setupQuickAction() {
+		Context ctx = getActivity();
+		mQuickActionSetup = new HiddenQuickActionSetup(ctx);
+		mQuickActionSetup.setOnQuickActionListener(this);
+
+		int imageSize = AndroidUtils.dipToPixel(ctx, 40);
+
+		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
+		mQuickActionSetup.setImageSize(imageSize, imageSize);
+		mQuickActionSetup.setAnimationSpeed(700);
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(ctx, 30));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(ctx, 80));
+		mQuickActionSetup.setSwipeOnLongClick(true);
+
+		mQuickActionSetup.setConfirmationMessage(QuickAction.CONFIRM,
+				R.string.diffusion_keyword_remove_confirm, R.drawable.ic_confirm,
+				R.string.diffusion_keyword_remove_message);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		ListView listView = getListView();
-		SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
-				listView,
-				new SwipeDismissListViewTouchListener.OnDismissCallback() {
-					@Override
-					public void onDismiss(ListView listView,
-							int[] reverseSortedPositions) {
-						for (int position : reverseSortedPositions) {
-							String toDelete = (String) getListAdapter()
-									.getItem(position);
-							((ArrayAdapter<String>) getListAdapter())
-									.remove(toDelete);
-							DBHelper.removeKeyword(getActivity(),
-									mCallbacks.getListId(), toDelete);
-						}
-						((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-					}
-				});
-		listView.setOnTouchListener(touchListener);
-		// Setting this scroll listener is required to ensure that during
-		// ListView scrolling,
-		// we don't look for swipes.
-		listView.setOnScrollListener(touchListener.makeScrollListener());
+	public void onQuickAction(AdapterView<?> parent, View view, int position,
+			int quickActionId) {
+		switch (quickActionId) {
+		case QuickAction.CONFIRM:
+			String toDelete = (String) getListAdapter().getItem(position);
+			((ArrayAdapter<String>) getListAdapter()).remove(toDelete);
+			DBHelper.removeKeyword(getActivity(), mCallbacks.getListId(),
+					toDelete);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }

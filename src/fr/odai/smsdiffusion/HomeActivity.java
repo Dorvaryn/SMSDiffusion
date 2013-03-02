@@ -9,25 +9,35 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import fr.odai.smsdiffusion.HiddenQuickActionSetup.OnQuickActionListener;
 import fr.odai.smsdiffusion.adapter.ListAdapter;
 import fr.odai.smsdiffusion.adapter.POJOList;
 import fr.odai.smsdiffusion.db.DBHelper;
+import fr.odai.smsdiffusion.utils.AndroidUtils;
 
-public class HomeActivity extends ListActivity {
+public class HomeActivity extends ListActivity implements OnQuickActionListener {
+
+	private static final class QuickAction {
+		public static final int CONFIRM = 1;
+	}
+
+	private HiddenQuickActionSetup mQuickActionSetup;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		setupQuickAction();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		setListAdapter(new ListAdapter(this, R.layout.item_list,
-				DBHelper.getDiffusionLists(this)));
+				DBHelper.getDiffusionLists(this), mQuickActionSetup));
 	}
 
 	@Override
@@ -69,11 +79,12 @@ public class HomeActivity extends ListActivity {
 								int whichButton) {
 							dialog.cancel();
 							String value = input.getText().toString();
-							DBHelper.insertList(getBaseContext(), value, false);
+							DBHelper.insertList(getBaseContext(), value, true);
 							setListAdapter(new ListAdapter(
 									getBaseContext(),
 									R.layout.item_list,
-									DBHelper.getDiffusionLists(getBaseContext())));
+									DBHelper.getDiffusionLists(getBaseContext()),
+									mQuickActionSetup));
 						}
 					});
 
@@ -90,6 +101,40 @@ public class HomeActivity extends ListActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void setupQuickAction() {
+		mQuickActionSetup = new HiddenQuickActionSetup(this);
+		mQuickActionSetup.setOnQuickActionListener(this);
+
+		int imageSize = AndroidUtils.dipToPixel(this, 40);
+
+		mQuickActionSetup.setBackgroundResource(android.R.color.darker_gray);
+		mQuickActionSetup.setImageSize(imageSize, imageSize);
+		mQuickActionSetup.setAnimationSpeed(700);
+		mQuickActionSetup.setStartOffset(AndroidUtils.dipToPixel(this, 30));
+		mQuickActionSetup.setStopOffset(AndroidUtils.dipToPixel(this, 80));
+		mQuickActionSetup.setSwipeOnLongClick(true);
+
+		mQuickActionSetup.setConfirmationMessage(QuickAction.CONFIRM,
+				R.string.home_remove_confirm, R.drawable.ic_confirm,
+				R.string.home_remove_message);
+	}
+
+	@Override
+	public void onQuickAction(AdapterView<?> parent, View view, int position,
+			int quickActionId) {
+		switch (quickActionId) {
+		case QuickAction.CONFIRM:
+			POJOList toDelete = (POJOList) getListAdapter().getItem(position);
+        	DBHelper.removeList(this, toDelete.getId());
+        	setListAdapter(new ListAdapter(this, R.layout.item_list,
+    				DBHelper.getDiffusionLists(this), mQuickActionSetup));
+			break;
+
+		default:
+			break;
 		}
 	}
 
