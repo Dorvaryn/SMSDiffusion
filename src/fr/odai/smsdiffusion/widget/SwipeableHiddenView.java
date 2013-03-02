@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -688,7 +689,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 				
 				if (wasCoveredBefore || wasVisibleBefore) {
 					// manual direction change, calculation avoids sticky start
-					mAnimateForward = wasCoveredBefore;
 				} else {
 					calculateAnimationDirectionChange(lastOffset >= 0 && mOffset < 0
 							|| lastOffset < 0 && mOffset >= 0
@@ -698,7 +698,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 				if (wasCoveredBefore != isHiddenViewCovered()) {
 					requestLayout();
 				}
-				
 				invalidate();
 			}
 			break;
@@ -723,11 +722,13 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 		
 		case CLOSE:
 		case CANCEL:
+			lastOverlayOffset = 0;
 			animate(false);
 			break;
 		
 		case CLICK:
 		case LONG_CLICK:
+			lastOverlayOffset = 0;
 			if (isHiddenViewCovered()) {
 				if (mData.swipeDirection == SwipeDirection.LEFT) {
 					mOffset = -0.01f;
@@ -883,7 +884,6 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 			int overlayOffset = Math.round(offset);
 			overlayOffset = mOffset >= 0 ? overlayOffset : -overlayOffset;
 			
-
 			mOverlayView.offsetLeftAndRight(-lastOverlayOffset);
 			mOverlayView.offsetLeftAndRight(overlayOffset);
 			drawChild(canvas, mOverlayView, drawingTime);
@@ -1149,6 +1149,7 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 				
 				if (mAnimateForward && Math.abs(mOffset) >= 1.0f) {
 					mOffset = mOffset >= 0 ? 1f : -1f;
+					
 					mAnimating = false;
 				} else if (!mAnimateForward
 						&& (offsetBefore >= 0 && mOffset <= 0 || offsetBefore < 0 && mOffset >= 0)) {
@@ -1291,6 +1292,7 @@ public class SwipeableHiddenView extends FrameLayout implements SwipeableListIte
 	}
 	
 	private void calculateAnimationDirectionChange(boolean forward) {
+		
 		if (mAnimateForward == forward || mData.openAnimation == mData.closeAnimation
 				|| isHiddenViewCovered() || isHiddenViewVisible()) {
 			mAnimateForward = forward;
