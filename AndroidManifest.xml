@@ -38,7 +38,7 @@
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.SEND_SMS" >
-            <intent-filter android:priority="214783648" >
+            <intent-filter android:priority="1000" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
